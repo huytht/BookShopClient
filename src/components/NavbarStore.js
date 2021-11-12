@@ -5,7 +5,8 @@ import { Search,ShoppingCartOutlined } from '@material-ui/icons';
 
 const Container = styled('div')(
     {
-        height: 60
+        height: 75,
+        
     }
 );
 
