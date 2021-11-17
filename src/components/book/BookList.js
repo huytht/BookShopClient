@@ -65,7 +65,7 @@ const BookList = () => {
                             <Card sx={{
                                 marginTop: 1,
                                 width: '100%',
-                                border:'none'
+                                borderBottomColor:'red'
 
                             }}>
                                 <CardMedia

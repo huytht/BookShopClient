@@ -40,15 +40,6 @@ const Right = styled('div')(
     }
 )
  
-const CImage = styled('div')(
-    {
-        
-        marginLeft:'25.5ch',
-        height:'64.7ch',
-        
-    }
-)
-
 
 const cate =[
     'Tiểu thuyết',
@@ -166,7 +157,7 @@ const MenuStore = () =>{
     return(
         <Container>
             <Wrapper>
-                <AppBar position="static" style={{backgroundColor:'green',maxHeight:50,justifyContent:'center'}}>
+                <AppBar position="static" style={{backgroundColor:'green',maxHeight:50,justifyContent:'center',border:0}}>
                     <Toolbar style={{}}>
                         <Button  
                             ref={anchorRef}

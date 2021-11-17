@@ -42,3 +42,31 @@ export const productitem = [
     
    
 ]
+export const ListComment = [
+    {
+        id:1,
+        name:'Anh Kha',
+        comment:'Hay quá'
+    },
+    {
+        id:2,
+        name:'Tường Huy',
+        comment:'Vote 5sao'
+    },
+    {
+        id:3,
+        name:'Thiên Phú',
+        comment:'Nhân viên nhiệt tình'
+    },
+    {
+        id:4,
+        name:'Admin',
+        comment:'Cảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giảCảm ơn độc giả'
+    },
+    {
+        id:5,
+        name:'Admin',
+        comment:'Sách đã được cập nhật'
+    },
+
+]
