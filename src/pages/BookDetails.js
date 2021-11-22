@@ -18,14 +18,15 @@ import { Divider, Avatar, Grid } from "@material-ui/core";
 import Moment from "react-moment";
 import RBookDetails from "../components/book/RBookDetails";
 import RRatingBook from "../components/book/RRatingBook";
-import { MenuNgang } from "../components/book/MenuNgang";
-import { BrowserRouter, Switch } from "react-router-dom";
-
-import { routes } from "../config/routes";
-import {MyRoute} from "../components/MyRoute"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CommentContext, CommentContextProvider } from "../context/CommentContext";
-
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import PropTypes from 'prop-types';
+
+
+
 const Container = styled('div')(
     {
 
@@ -97,13 +98,43 @@ const Name = styled('div')(
     }
 )
 
+const TabPanel = (props) => {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+const a11yProps = (index) => {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+
 const BookDetails = () => {
     const [value, setValue] = React.useState(0);
 
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     return (
         <Container>
-            <NavbarStore />
-            <MenuStore />
+            
             <Wrapper>
                 <Breadcrumbs aria-label="breadcrumb" style={{ borderBottom: '1px solid green' }} >
                     <Link underline="hover" color="inherit" href="/">
@@ -156,8 +187,8 @@ const BookDetails = () => {
                             <h1>Nhà Giả Kim</h1>
                             <label>Tác giả: </label><a style={{ fontWeight: 'bold' }}>Tố Hữu</a> <br />
                             <label>Nhà xuất bản: </label><a style={{ fontWeight: 'bold' }}>Kim Đồng</a> <br />
-                            <label>Ngày xuất bản: </label><a>22/1/2021</a><br/>
-                            <label style={{display:'flex'}}>Đánh giá: 4/5 <StarBorderOutlinedIcon /></label>
+                            <label>Ngày xuất bản: </label><a>22/1/2021</a><br />
+                            <label style={{ display: 'flex' }}>Đánh giá: 4/5 <StarBorderOutlinedIcon /></label>
                             <DESCSUMARY>Cuốn sách Nhà Giả Kim của Paulo Coelho là cuốn sách rất hay mà mình từng đọc.
                                 Nội dung cuốn sách xoay quanh câu chuyện cậu bé chăn cừu Santiago và cuộc hành trình đi tìm kho báu của cậu.
                                 Cuộc hành trình đó đã dạy cho cậu rất nhiều bài học về cuộc sống  giúp cho cậu nhận ra được mục đích và ý nghĩa của cuộc đời mình.
@@ -214,24 +245,20 @@ const BookDetails = () => {
                         <Button style={{ backgroundColor: 'green', color: 'white', height: '50px', borderRadius: '0px' }} fullWidth >Thêm vào giỏ hàng<ShoppingCartOutlined /></Button>
                     </Paper>
                 </Box>
-                
-                <CommentContextProvider>
-                    <BrowserRouter>
-
-                        {/* <!-- Menu ngang --> */}
-                        <MenuNgang />
-                        {/* Định tuyến */}
-                        <Switch>
-                            {routes.map((item, index) => {
-                                return (
-                                    <MyRoute key={index} path={item.path} element={item.element} />
-                                )
-                            })}
-                        </Switch>
-
-                    </BrowserRouter>
-
-                </CommentContextProvider>
+                <Box sx={{ width: '100%',marginTop:'10px' }}>
+                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                            <Tab label="Chi tiết sách" {...a11yProps(0)} />
+                            <Tab label="Đánh giá của độc giả" {...a11yProps(1)} />                   
+                        </Tabs>
+                    </Box>
+                    <TabPanel value={value} index={0}>
+                        <RBookDetails />
+                    </TabPanel>
+                    <TabPanel value={value} index={1}>
+                        <RRatingBook />
+                    </TabPanel>
+                </Box>
             </Wrapper>
 
         </Container>

@@ -11,7 +11,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
-import { routes } from "../../config/routes";
 
 const Title = styled('h1')(
     {
@@ -59,9 +58,8 @@ const invoiceTotal = invoiceSubtotal;
 
 const Cart = () => {
     return (
+        
         <Container>
-            <NavbarStore />
-            <MenuStore />
             <Title>Giỏ Hàng</Title>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="spanning table">

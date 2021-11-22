@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { productitem } from "../../data";
 import { Grid } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
-
+import { Link } from "react-router-dom";
 
 const Container = styled('div')(
     {
@@ -75,14 +75,13 @@ const BookList = () => {
                                     alt="green iguana"
                                 />
                                 <CardContent sx={{ textAlign: 'center', height: '40px' }}>
-                                    <Typography gutterBottom variant="h5" style={{ alignItems: 'center' }}>
-                                        <Button
-                                            sx={{
-                                                color: 'black', '&:hover': {
-                                                    color: 'green',
-                                                },
+                                    <Typography gutterBottom variant="h5" style={{ alignItems: 'center', fontSize:'15px' }}>
+                                        <Link
+                                            style={{    
+                                                textDecoration:'none'
                                             }}
-                                        ><h1>{item.name}</h1></Button>
+                                            to="/book"
+                                        ><h1>{item.name}</h1></Link>
 
                                     </Typography>
                                 </CardContent>
@@ -120,15 +119,17 @@ const BookList = () => {
                                     src={item.img}
                                     alt="green iguana"
                                 />
-                                <CardContent sx={{ textAlign: 'center', height: '40px' }}>
-                                    <Typography gutterBottom variant="h5" style={{ alignItems: 'center' }}>
-                                        <Button
-                                            sx={{
-                                                color: 'black', '&:hover': {
-                                                    color: 'green'
-                                                },
+                                <CardContent sx={{ textAlign: 'center', height: '40px', }}>
+                                   
+                                    <Typography gutterBottom variant="h5" style={{ alignItems: 'center', fontSize:'15px', }} >
+                                        <Link
+                                            style={{
+                                                textDecoration:'none'
                                             }}
-                                        ><h1>{item.name}</h1></Button>
+                                            to="/book"
+                                            
+                                        ><h1>{item.name}</h1></Link>
+
                                     </Typography>
                                 </CardContent>
                                 <CardActions sx={{ justifyContent: 'center',height:'110px',width:'100%' }}>

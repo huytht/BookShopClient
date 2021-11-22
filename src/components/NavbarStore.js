@@ -99,7 +99,7 @@ const NavbarStore = () => {
                 </Center>
                 <Right>
                     <MenuItem>
-                    {/* <IconButton
+                        {/* <IconButton
                             onClick={handleClick}
                         >
                             <Badge badgeContent="4" color="primary" style={{ justifyContent: 'flex-end' }}>
@@ -107,17 +107,14 @@ const NavbarStore = () => {
                             </Badge>
                         </IconButton>
                        */}
-                        <Router >
                         
-                        <Link to="/cart">
-                            <Badge badgeContent="4" color="primary" style={{ justifyContent: 'flex-end' }}>
+
+                            <Link to="/cart">
+                                <Badge badgeContent="4" color="primary" style={{ justifyContent: 'flex-end' }}>
                                     <ShoppingCartOutlined style={{ fontSize: '35px' }} />
-                            </Badge>
-                        </Link>
-                            <Switch>
-                                <Route exact path="/cart" component={Cart} />
-                            </Switch>
-                        </Router>
+                                </Badge>
+                            </Link>
+                           
 
                         <Button>Đăng nhập</Button>
                         <Button>Đăng kí</Button>
