@@ -8,8 +8,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { productitem } from "../../data";
 import { Grid } from "@material-ui/core";
-import { display, height, width } from "@mui/system";
 import { ShoppingCartOutlined } from "@material-ui/icons";
+
 
 const Container = styled('div')(
     {

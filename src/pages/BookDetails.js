@@ -19,10 +19,10 @@ import Moment from "react-moment";
 import RBookDetails from "../components/book/RBookDetails";
 import RRatingBook from "../components/book/RRatingBook";
 import { MenuNgang } from "../components/book/MenuNgang";
-import { BrowserRouter, Routes } from "react-router-dom";
+import { BrowserRouter, Switch } from "react-router-dom";
 
 import { routes } from "../config/routes";
-import { MyRoute } from "../components/book/MyRoute";
+import {MyRoute} from "../components/MyRoute"
 import { CommentContext, CommentContextProvider } from "../context/CommentContext";
 
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
@@ -221,13 +221,13 @@ const BookDetails = () => {
                         {/* <!-- Menu ngang --> */}
                         <MenuNgang />
                         {/* Định tuyến */}
-                        <Routes>
+                        <Switch>
                             {routes.map((item, index) => {
                                 return (
                                     <MyRoute key={index} path={item.path} element={item.element} />
                                 )
                             })}
-                        </Routes>
+                        </Switch>
 
                     </BrowserRouter>
 

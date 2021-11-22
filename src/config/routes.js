@@ -1,6 +1,6 @@
 import  RBookDetails  from "../components/book/RBookDetails"
 import  RRatingBook  from "../components/book/RRatingBook"
-
+import Cart from "../components/cart/Cart"
 
 export const routes = [
     {
@@ -12,6 +12,14 @@ export const routes = [
         path: "/ratingbook",
         element: <RRatingBook/>,
         label: "Đánh giá sách"
+    },
+     
+]
+export const routesCart = [
+    {
+        path: "/cart",
+        element: <Cart/>,
+        label: "Giỏ hàng"
     },
     
 ]
