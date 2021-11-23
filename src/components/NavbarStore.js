@@ -92,9 +92,11 @@ const NavbarStore = () => {
                     </SearchContainer>
                 </Left>
                 <Center>
+                    <Link style={{textDecoration:'none'}} to="/">
                     <Logo>
                         BOOKSTORE
                     </Logo>
+                    </Link>
                 </Center>
                 <Right>
                     <MenuItem>

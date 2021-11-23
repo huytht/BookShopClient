@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "@material-ui/core";
+import { Box, styled } from "@material-ui/core";
 import { GridList,GridListTile } from "@material-ui/core";
 
 
@@ -8,7 +8,7 @@ const itemData = [
       id:1,
       img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363488_final1511.jpg',
       title: 'Bed',
-      cols:4
+      cols:2
     },
     {
         id:2,
@@ -34,6 +34,13 @@ const itemData = [
     title: 'Sink',
     cols:2
   }
+  ,
+  {
+      id:5,
+    img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg',
+    title: 'Sink',
+    cols:2
+  }
 ]
 const CImage = styled('div')(
     {
@@ -51,9 +58,9 @@ const Banner = () => {
             <GridList cellHeight={182.5} cols={4} >
                 {itemData.map((item) => (
                     <GridListTile key={item.id} cols={item.cols || 1} style={{ loading: "lazy", }}>
-
-                        <img src={item.img} />
-
+                     
+                        <img style={{height:'100%',width:'100%',magrinLeft:'1110px'}} src={item.img} />
+                     
                     </GridListTile>
                 ))}
             </GridList>

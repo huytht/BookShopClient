@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "@material-ui/core";
 import { Facebook,Room,Phone,MailOutline } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 
 const Container = styled('div')(
@@ -113,7 +114,9 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo>BOOKSTORE</Logo>
+        <Link style={{textDecoration:'none'}} to="/">
+          <Logo>BOOKSTORE</Logo>
+        </Link>
         <Desc>
             Web được phát triển bởi nhóm HKP-Học phần Công Nghệ Web-Đại học Sư Phạm TP.Hồ Chí Minh
         </Desc>
