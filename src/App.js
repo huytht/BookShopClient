@@ -5,6 +5,7 @@ import NavbarStore from "./components/NavbarStore";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { CommentContextProvider } from "./context/CommentContext";
 import MenuStore from "./components/menu/MenuStore";
+import Footer from "./components/footer/Footer";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path="/book" exact element={<BookDetails />} />
             <Route path="/cart" exact element={<Cart />} />
           </Routes>
+          <Footer/>
         </div>
       </Router>
     </CommentContextProvider>

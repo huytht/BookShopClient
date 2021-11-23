@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Paper from '@mui/material/Paper';
 import { styled } from '@material-ui/core';
 import { Divider, Avatar, Grid } from "@material-ui/core";
@@ -10,7 +10,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import { Button } from "@material-ui/core";
-import {CommentContext } from '../../context/CommentContext';
+import { CommentContext } from '../../context/CommentContext';
 
 const Title = styled('h1')(
     {
@@ -51,7 +51,7 @@ const RRatingBook = () => {
             id: data.length + 1,
             nameUser: nameUser,
             commentUser: commentUser,
-           
+
         };
         setData([...data, newComment]);
         setNameUser('');
@@ -62,9 +62,11 @@ const RRatingBook = () => {
         "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260";
 
     return (
-        <Paper elevation={0} style={{ marginTop: '10px', width: '1015px', height: '900px' }} >
+        
+        <Paper elevation={0} style={{ marginTop: '10px', width: '1015px', height: '100%' }} >
             <Title>Đánh giá của độc giả</Title>
-            <Paper elevation={0} style={{ border: '1px solid green', marginTop: '10px', width: '400px', height: '220px', marginLeft: '10px' }} >
+            <Paper elevation={0} style={{ marginTop: '10px', width: '400px', height: '100%', marginLeft: '10px' }} >
+                <Box style={{border:'1px solid black',height:'215px'}}>
                 <Rate> Đánh giá:
                     <Box>
 
@@ -74,18 +76,19 @@ const RRatingBook = () => {
                             onChange={(event, newValue) => {
                                 setValue(newValue);
                             }}
-                            style={{ marginLeft: '10px' }}
+                            style={{ marginLeft: '10px', }}
                         />
 
                     </Box>
                 </Rate>
-                <Name>Tên: <input style={{ marginLeft: '50px', width: '300px' }} value={nameUser} onChange={(e)=>{setNameUser(e.target.value)}}></input></Name>
-                <Content>Nội dung: <input style={{ marginLeft: '10px', height: '50px', width: '300px' }} value={commentUser} onChange={(e)=>{setCommentUser(e.target.value)}}></input></Content>
-                <Button style={{ backgroundColor: 'green', color: 'white', marginLeft: '150px', marginTop: '20px' }} onClick={handleClick}> Gửi đánh giá</Button>
+                <Name>Tên: <input style={{ marginLeft: '50px', width: '70%' }} value={nameUser} onChange={(e) => { setNameUser(e.target.value) }}></input></Name>
+                <Content>Nội dung: <input style={{ marginLeft: '15px', height: '50px', width: '70%' }} value={commentUser} onChange={(e) => { setCommentUser(e.target.value) }}></input></Content>
+                <Button style={{ backgroundColor: 'green', color: 'white', marginLeft: '150px', marginTop: '10px' }} onClick={handleClick}> Gửi đánh giá</Button>
+            </Box>
                 <div style={{ padding: 14 }} className="App">
                     <Title>Comments</Title>
                     {data.map((item) => (
-                        <Paper style={{ padding: "40px 20px", width: '1000px', }} >
+                        <Paper style={{ padding: "40px 20px", width: '1000px',height:'100%' }} >
                             <Grid container wrap="nowrap" spacing={2}>
                                 <Grid item>
                                     <Avatar alt="Remy Sharp" src={imgLink} />
@@ -101,60 +104,12 @@ const RRatingBook = () => {
                                 </Grid>
                             </Grid>
                             <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-                            
+
                         </Paper>
                     ))}
                     <Stack spacing={2}>
-                                <Pagination count={10} size="small" style={{marginTop:'20px'}} />
-
-                            </Stack>
-                    {/* <Paper style={{ padding: "40px 20px", width: '1000px' }} >
-                        <Grid container wrap="nowrap" spacing={2}>
-                            <Grid item>
-                                <Avatar alt="Remy Sharp" src={imgLink} />
-                            </Grid>
-                            <Grid justifyContent="left" item xs zeroMinWidth>
-                                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-                                <p style={{ textAlign: "left" }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                    luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-                                    Suspendisse congue vulputate lobortis. Pellentesque at interdum
-                                    tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-                                    sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
-                                    metus, efficitur lobortis nisi quis, molestie porttitor metus.
-                                    Pellentesque et neque risus. Aliquam vulputate, mauris vitae
-                                    tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-                                    lectus vitae ex.{" "}
-                                </p>
-                                <p style={{ textAlign: "left", color: "gray" }}>
-                                    <Moment fromNow>2021-11-16T20:15</Moment>
-                                </p>
-                            </Grid>
-                        </Grid>
-                        <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
-                        <Grid container wrap="nowrap" spacing={2}>
-                            <Grid item>
-                                <Avatar alt="Remy Sharp" src={imgLink} />
-                            </Grid>
-                            <Grid justifyContent="left" item xs zeroMinWidth>
-                                <h4 style={{ margin: 0, textAlign: "left" }}>Michel Michel</h4>
-                                <p style={{ textAlign: "left" }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                    luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-                                    Suspendisse congue vulputate lobortis. Pellentesque at interdum
-                                    tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-                                    sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
-                                    metus, efficitur lobortis nisi quis, molestie porttitor metus.
-                                    Pellentesque et neque risus. Aliquam vulputate, mauris vitae
-                                    tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-                                    lectus vitae ex.{" "}
-                                </p>
-                                <p style={{ textAlign: "left", color: "gray" }}>
-                                    <Moment fromNow>2021-11-16T20:15</Moment>
-                                </p>
-                            </Grid>
-                        </Grid>
-                    </Paper> */}
+                        <Pagination count={10} size="small" style={{ marginTop: '20px' }} />
+                    </Stack>
                 </div>
             </Paper>
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { styled } from "@material-ui/core";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -6,10 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { productitem } from "../../data";
 import { Grid } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import callApi from "../api";
+import { AddCart, GetAllProduct } from "../actions/index";
 
 const Container = styled('div')(
     {
@@ -46,7 +48,21 @@ const ViewMore = styled('div')(
     }
 )
 
+
 const BookList = () => {
+    const { _products } = useSelector((state) => state._todoProduct);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        callApi('/products', 'GET', null).then(res => {         
+            dispatch(GetAllProduct(res.data));
+        });
+       
+    }, [])
+
+    const handleAddToCart = (item) => {
+        dispatch(AddCart(item));
+    }
+    
     return (
         <Container>
 
@@ -60,7 +76,7 @@ const BookList = () => {
 
                 <Grid container spacing={2} direction="row" sx={{ width: 'auto' }} >
 
-                    {productitem.map((item) => (
+                    {_products.map((item) => (
                         <Grid item xs={6} md={3} style={{ padding: 40 }}>
                             <Card sx={{
                                 marginTop: 1,
@@ -71,7 +87,7 @@ const BookList = () => {
                                 <CardMedia
                                     component="img"
                                     height="270"
-                                    src={item.img}
+                                    src={item.image}
                                     alt="green iguana"
                                 />
                                 <CardContent sx={{ textAlign: 'center', height: '40px' }}>
@@ -90,8 +106,8 @@ const BookList = () => {
                                         background: 'green', color: 'white', '&:hover': {
                                             background: "green",
                                         },
-                                    }}>Thêm vào giỏ <ShoppingCartOutlined/></Button>
-                                    <span style={{ color: 'red', marginLeft: '20px' }}><h4>30.000Đ</h4></span>
+                                    }} onClick={() => handleAddToCart(item)}>Thêm vào giỏ <ShoppingCartOutlined/></Button>
+                                    <span style={{ color: 'red', marginLeft: '20px' }}><h4>{item.price}</h4></span>
                                 </CardActions>
                             </Card>
                         </Grid>
@@ -107,7 +123,7 @@ const BookList = () => {
                 </ViewMore>
                 <Grid container spacing={2} direction="row" sx={{ width: 'auto' }}   >
 
-                    {productitem.map((item) => (
+                    {_products.map((item) => (
                         <Grid item xs={6} md={3} style={{ padding: 40 }}>
                             <Card sx={{
                                 marginTop: 1,
@@ -116,7 +132,7 @@ const BookList = () => {
                                 <CardMedia
                                     component="img"
                                     height="270"
-                                    src={item.img}
+                                    src={item.image}
                                     alt="green iguana"
                                 />
                                 <CardContent sx={{ textAlign: 'center', height: '40px', }}>
@@ -137,8 +153,8 @@ const BookList = () => {
                                         background: 'green', color: 'white', '&:hover': {
                                             background: "green",
                                         },
-                                    }}>Thêm vào giỏ <ShoppingCartOutlined/></Button>
-                                    <span style={{ color: 'red', marginLeft: '20px' }}><h4>30.000Đ</h4></span>
+                                    }} onClick={() => handleAddToCart(item)}>Thêm vào giỏ <ShoppingCartOutlined/></Button>
+                                    <span style={{ color: 'red', marginLeft: '20px' }}><h4>{item.price}</h4></span>
                                 </CardActions>
                             </Card>
                         </Grid>
@@ -148,5 +164,4 @@ const BookList = () => {
         </Container>
     )
 }
-
 export default BookList;

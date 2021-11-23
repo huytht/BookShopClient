@@ -8,7 +8,7 @@ const Container = styled('div')(
         display: 'flex',
         borderTop:'3px solid black',
        
-       
+       position:'relative'
         
     }
 )

@@ -2,42 +2,51 @@ export const productitem = [
     {
         id:1,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim'
+        name: 'Nhà Giả Kim',
+        price:'30000đ'
+
     },
     {
         id:2,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 1'
+        name: 'Nhà Giả Kim 1',
+        price:'30000đ'
     },
     {
         id:3,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 2'
+        name: 'Nhà Giả Kim 2',
+        price:'30000đ'
     },
     {
         id:4,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 3'
+        name: 'Nhà Giả Kim 3',
+        price:'30000đ'
     },
     {
         id:5,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 4'
+        name: 'Nhà Giả Kim 4',
+        price:'30000đ'
     },
     {
         id:1,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim'
+        name: 'Nhà Giả Kim',
+        price:'30000đ'
     },
     {
         id:2,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 1'
+        name: 'Nhà Giả Kim 1',
+        price:'30000đ'
     },
     {
         id:3,
         img: 'https://d1j8r0kxyu9tj8.cloudfront.net/images/1567492611Rj5siYiYrkqcvX8.jpg',
-        name: 'Nhà Giả Kim 2'
+        name: 'Nhà Giả Kim 2',
+        price:'30000đ'
     },
     
    

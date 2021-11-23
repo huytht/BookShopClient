@@ -241,8 +241,8 @@ const BookDetails = () => {
                             </div>
                         </Info>
 
-                        <Button style={{ backgroundColor: 'green', color: 'white', height: '50px', marginTop: '25px', borderRadius: '0px' }} fullWidth >Mua ngay</Button>
-                        <Button style={{ backgroundColor: 'green', color: 'white', height: '50px', borderRadius: '0px' }} fullWidth >Thêm vào giỏ hàng<ShoppingCartOutlined /></Button>
+                        <Button style={{ backgroundColor: 'green', color: 'white',fontWeight:'bold', height: '50px', marginTop: '25px', borderRadius: '0px' }} fullWidth >Mua ngay</Button>
+                        <Button style={{ backgroundColor: '#ADFF2F', color: 'black',fontWeight:'bold', height: '50px', borderRadius: '0px', }} fullWidth >Thêm vào giỏ hàng<ShoppingCartOutlined /></Button>
                     </Paper>
                 </Box>
                 <Box sx={{ width: '100%',marginTop:'10px' }}>

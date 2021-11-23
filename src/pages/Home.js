@@ -4,14 +4,11 @@ import MenuStore from "../components/menu/MenuStore";
 import BookList from "../components/book/BookList";
 import Banner from "../components/banner/Banner";
 import Footer from "../components/footer/Footer";
-const Home = () =>{
-    return(
+const Home = () => {
+    return (
         <div>
-          
-           
-           <Banner/>
-           <BookList/>
-           <Footer/>
+            <Banner />
+            <BookList />
         </div>
     )
 }

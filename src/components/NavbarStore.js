@@ -3,6 +3,7 @@ import { Button, IconButton, styled } from "@material-ui/core";
 import { Badge } from "@material-ui/core";
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Link, Switch, Route, BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 import Cart from "./cart/Cart";
@@ -78,10 +79,8 @@ const MenuItem = styled('div')(
 )
 
 const NavbarStore = () => {
-    // const navigate = useNavigate()
-    // const handleClick = () => {
-    //     navigate("/cart")
-    // }
+    const { numberCart } = useSelector((state) => state._todoProduct);
+
     return (
         <Container>
             <Wrapper>
@@ -110,7 +109,7 @@ const NavbarStore = () => {
                         
 
                             <Link to="/cart">
-                                <Badge badgeContent="4" color="primary" style={{ justifyContent: 'flex-end' }}>
+                                <Badge badgeContent={numberCart} color="primary" style={{ justifyContent: 'flex-end' }}>
                                     <ShoppingCartOutlined style={{ fontSize: '35px' }} />
                                 </Badge>
                             </Link>
