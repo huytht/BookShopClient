@@ -3,10 +3,10 @@ import React,{createContext, useState } from "react";
 export const CommentContext = createContext({
     data: '',
     setData: () => { },
-    nameUser: '',
-    setNameUser: () => { },
-    commentUser: '',
-    setCommentUser: () => { }
+    // nameUser: '',
+    // setNameUser: () => { },
+    // commentUser: '',
+    // setCommentUser: () => { }
 });
 const ListComment = [
     {
@@ -49,13 +49,6 @@ export const CommentContextProvider = ({ children }) => {
             setNameUser:setMyName,
             commentUser:myComment,
             setCommentUser:setMyComment       
-            // data: myData,
-            // setData: setMyData,
-            // name: taskName,
-            // setMyName: setTaskName,
-            // deadline: taskDeadline,
-            // setMyDeadline: setTaskDeadline
-
         }}>
             {children}
         </CommentContext.Provider>

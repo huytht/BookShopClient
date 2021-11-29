@@ -69,7 +69,7 @@ const Cart = () => {
     });
 
     function TotalPrice(price, tonggia) {
-        return Number(price * tonggia).toLocaleString('en-US');
+        return Number(price * tonggia).toLocaleString('vi-VN');
     }
 
     const handleIncreaseQuantity = (index) => {
@@ -108,8 +108,8 @@ const Cart = () => {
                     <TableBody>
                         {ListCart.map((item, index) => (
                             <TableRow key={index}>
-                                <TableCell>{item.name}</TableCell>
-                                <TableCell align="center"   ><img alt="" src={item.image} style={{ width: '100px', height: '80px' }} /></TableCell>
+                                <TableCell>{item.title}</TableCell>
+                                <TableCell align="center"   ><img alt="" src={`https://firebasestorage.googleapis.com/v0/b/bookshoponline-85349.appspot.com/o/book%2F${item.image}?alt=media`} style={{ width: '100px', height: '80px' }} /></TableCell>
                                 <TableCell align="center">
                                     <Button 
                                     // style={{

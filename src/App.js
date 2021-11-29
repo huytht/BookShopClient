@@ -9,21 +9,18 @@ import Footer from "./components/footer/Footer";
 
 const App = () => {
   return (
-    <CommentContextProvider>
-      <Router>
-        <div className="App">
-          <NavbarStore />
-          <MenuStore/>
-          <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/book" exact element={<BookDetails />} />
-            <Route path="/cart" exact element={<Cart />} />
-          </Routes>
-          <Footer/>
-        </div>
-      </Router>
-    </CommentContextProvider>
-
+    <Router>
+      <div className="App">
+        <NavbarStore />
+        <MenuStore/>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/book" exact element={<BookDetails />} />
+          <Route path="/cart" exact element={<Cart />} />
+        </Routes>
+        <Footer/>
+      </div>
+    </Router>
   );
 }
 
