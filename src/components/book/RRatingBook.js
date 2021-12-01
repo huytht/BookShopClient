@@ -41,7 +41,7 @@ const Name = styled('div')(
 
 const RRatingBook = ({props}) => {
     const [value, setValue] = useState({
-        book_id: props.book_id,
+        book_id: props?.book_id,
         user_id: 0,
         created_date: new Date(),
         rate: 0,
@@ -60,7 +60,6 @@ const RRatingBook = ({props}) => {
     }
 
     return (
-        
         <Paper elevation={0} style={{ marginTop: '10px', width: '1015px', height: '100%' }} >
             <Title>Đánh giá của độc giả</Title>
             <Paper elevation={0} style={{ marginTop: '10px', width: '400px', height: '100%', marginLeft: '10px' }} >
@@ -69,7 +68,7 @@ const RRatingBook = ({props}) => {
                     <Box>
 
                         <Rating
-                            name="simple-controlled"
+                            name="rate"
                             value={value.rate}
                             onChange={handleChange}
                             style={{ marginLeft: '10px', }}
@@ -77,8 +76,7 @@ const RRatingBook = ({props}) => {
 
                     </Box>
                 </Rate>
-                {/* <Name>Tên: <input style={{ marginLeft: '50px', width: '70%' }} value={values.user_id.name} onChange={(e) => { setNameUser(e.target.value) }}></input></Name> */}
-                <Content>Nội dung: <input style={{ marginLeft: '15px', height: '50px', width: '70%' }} value={value.remark} onChange={handleChange}></input></Content>
+                <Content>Nội dung: <input name="remark" style={{ marginLeft: '15px', height: '50px', width: '70%' }} value={value.remark} onChange={handleChange}></input></Content>
                 <Button style={{ backgroundColor: 'green', color: 'white', marginLeft: '150px', marginTop: '10px' }} onClick={handleClick}> Gửi đánh giá</Button>
             </Box>
                 <div style={{ padding: 14 }} className="App">
@@ -87,7 +85,7 @@ const RRatingBook = ({props}) => {
                         <Paper style={{ padding: "40px 20px", width: '1000px',height:'100%' }} >
                             <Grid container wrap="nowrap" spacing={2}>
                                 <Grid item>
-                                    <Avatar alt="Remy Sharp" src={`https://firebasestorage.googleapis.com/v0/b/bookshoponline-85349.appspot.com/o/user%2F${props.user?.avatar}?alt=media`} />
+                                    <Avatar alt="Remy Sharp" src={`https://firebasestorage.googleapis.com/v0/b/bookshoponline-85349.appspot.com/o/user%2F${item.user?.avatar}?alt=media`} />
                                 </Grid>
                                 <Grid justifyContent="left" item xs zeroMinWidth>
                                     <h4 style={{ margin: 0, textAlign: "left" }}>{item.user.fullname}</h4>

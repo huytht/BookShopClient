@@ -10,8 +10,8 @@ import { Grid } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import callApi from "../api";
-import { AddCart, GetAllProduct } from "../actions/index";
+import callApi from "../../api";
+import { AddCart, GetAllProduct } from "../../actions/cart";
 
 const Container = styled("div")({
   display: "flex",
@@ -39,7 +39,7 @@ const ViewMore = styled("div")({
 });
 
 const BookList = () => {
-  const { _products } = useSelector((state) => state._todoProduct);
+  const { _products } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   useEffect(() => {
     callApi("book", "GET", null).then((res) => {
@@ -123,7 +123,10 @@ const BookList = () => {
                     Thêm vào giỏ <ShoppingCartOutlined />
                   </Button>
                   <span style={{ color: "red", marginLeft: "20px" }}>
-                    <h4>{item.price}</h4>
+                    <h4>{item.price?.toLocaleString('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND'
+                  })}</h4>
                   </span>
                 </CardActions>
               </Card>

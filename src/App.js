@@ -3,7 +3,6 @@ import BookDetails from "./pages/BookDetails"
 import Cart from "./components/cart/Cart";
 import NavbarStore from "./components/NavbarStore";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { CommentContextProvider } from "./context/CommentContext";
 import MenuStore from "./components/menu/MenuStore";
 import Footer from "./components/footer/Footer";
 

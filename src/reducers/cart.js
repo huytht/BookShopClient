@@ -1,5 +1,4 @@
-import { combineReducers } from 'redux';
-import {GET_ALL_PRODUCT,GET_PRODUCT_DETAIL,GET_NUMBER_CART,ADD_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, DELETE_CART, DELETE_ALL_CART} from  '../actions';
+import {GET_ALL_PRODUCT,GET_PRODUCT_DETAIL,GET_NUMBER_CART,ADD_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, DELETE_CART, DELETE_ALL_CART} from  '../actions/types';
 
 const initProduct = {
     numberCart:0,
@@ -8,7 +7,7 @@ const initProduct = {
     _product: {}
 }
 
-function todoProduct(state = initProduct,action){
+export default function product(state = initProduct,action){
     switch(action.type){
         case GET_ALL_PRODUCT: 
             return{
@@ -95,7 +94,3 @@ function todoProduct(state = initProduct,action){
             return state;
     }
 }
-const ShopApp = combineReducers({
-    _todoProduct:todoProduct
-});
-export default ShopApp;

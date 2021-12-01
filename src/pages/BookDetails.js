@@ -12,9 +12,9 @@ import RRatingBook from "../components/book/RRatingBook";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import callApi from './../components/api/index';
+import callApi from '../api/index';
 import { useDispatch } from 'react-redux';
-import { GetProductDetail } from './../components/actions/index';
+import { GetProductDetail } from '../actions/cart';
 import { useSelector } from 'react-redux';
 
 const Container = styled("div")({});
@@ -65,7 +65,7 @@ const a11yProps = (index) => {
 
 const BookDetails = () => {
   const [value, setValue] = useState(0);
-  const { _product } = useSelector((state) => state._todoProduct);
+  const { _product } = useSelector((state) => state.product);
   const dispatch = useDispatch();
 
   const params = new URL(document.location).searchParams;
