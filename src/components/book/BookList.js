@@ -98,7 +98,7 @@ const BookList = () => {
                       }}
                       to={`/book?id=${item._id}`}
                     >
-                      <h1>{item.title}</h1>
+                      <h4>{item.title}</h4>
                     </Link>
                   </Typography>
                 </CardContent>
@@ -174,7 +174,7 @@ const BookList = () => {
                       }}
                       to="/book"
                     >
-                      <h1>{item.title}</h1>
+                      <h4>{item.title}</h4>
                     </Link>
                   </Typography>
                 </CardContent>
