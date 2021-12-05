@@ -11,7 +11,7 @@ import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import callApi from "../../api";
-import { AddCart, GetAllProduct } from "../../actions/cart";
+import { AddCart, GetAllProduct, GetAllProductBest, GetAllProductNew } from "../../actions/cart";
 
 const Container = styled("div")({
   display: "flex",
@@ -39,16 +39,18 @@ const ViewMore = styled("div")({
 });
 
 const BookList = () => {
-  const { _products } = useSelector((state) => state.product);
+  const { _productBestList, _productNewList } = useSelector((state) => state.product);
   const dispatch = useDispatch();
   useEffect(() => {
-    callApi("book", "GET", null).then((res) => {
-      dispatch(GetAllProduct(res.data));
+    callApi("book/list-best-book", "GET", null).then((res) => {
+      dispatch(GetAllProductBest(res.data));
+    });
+    callApi("book/list-newest-book", "GET", null).then((res) => {
+      dispatch(GetAllProductNew(res.data));
     });
   }, []);
 
   const handleAddToCart = (item) => {
-    console.log(item);
     dispatch(AddCart(item));
   };
 
@@ -71,7 +73,7 @@ const BookList = () => {
         </ViewMore>
 
         <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
-          {_products.map((item, key) => (
+          {_productBestList.map((item, key) => (
             <Grid key={item._id} item xs={6} md={3} style={{ padding: 40 }}>
               <Card
                 sx={{
@@ -123,10 +125,12 @@ const BookList = () => {
                     Thêm vào giỏ <ShoppingCartOutlined />
                   </Button>
                   <span style={{ color: "red", marginLeft: "20px" }}>
-                    <h4>{item.price?.toLocaleString('vi-VN', {
-                      style: 'currency',
-                      currency: 'VND'
-                  })}</h4>
+                    <h4>
+                      {item.price?.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </h4>
                   </span>
                 </CardActions>
               </Card>
@@ -148,7 +152,7 @@ const BookList = () => {
           </Button>
         </ViewMore>
         <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
-          {_products.map((item, key) => (
+          {_productNewList.map((item, key) => (
             <Grid key={item._id} item xs={6} md={3} style={{ padding: 40 }}>
               <Card
                 sx={{
@@ -198,7 +202,12 @@ const BookList = () => {
                     Thêm vào giỏ <ShoppingCartOutlined />
                   </Button>
                   <span style={{ color: "red", marginLeft: "20px" }}>
-                    <h4>{item.price}</h4>
+                    <h4>
+                      {item.price?.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </h4>
                   </span>
                 </CardActions>
               </Card>

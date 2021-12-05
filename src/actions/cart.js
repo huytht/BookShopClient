@@ -6,6 +6,20 @@ export function GetAllProduct(payload){
         payload
     }
 }
+
+export function GetAllProductBest(payload){
+    return{
+        type:'GET_ALL_PRODUCT_BEST',
+        payload
+    }
+}
+
+export function GetAllProductNew(payload){
+    return{
+        type:'GET_ALL_PRODUCT_NEW',
+        payload
+    }
+}
 /* GET_PRODUCT_DETAIL */
 export function GetProductDetail(payload){
     return{

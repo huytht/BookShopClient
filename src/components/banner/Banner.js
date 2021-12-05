@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, styled } from "@material-ui/core";
-import { GridList,GridListTile } from "@material-ui/core";
+import { ImageList,ImageListItem } from "@material-ui/core";
 
 
 const itemData = [
@@ -55,15 +55,13 @@ const CImage = styled('div')(
 const Banner = () => {
     return (
         <CImage >
-            <GridList cellHeight={182.5} cols={4} >
-                {itemData.map((item) => (
-                    <GridListTile key={item.id} cols={item.cols || 1} style={{ loading: "lazy", }}>
-                     
-                        <img style={{height:'100%',width:'100%',magrinLeft:'1110px'}} src={item.img} />
-                     
-                    </GridListTile>
+            <ImageList rowHeight={182.5} cols={4} >
+                {itemData.map((item, index) => (
+                    <ImageListItem key={index} cols={item.cols || 1} style={{ loading: "lazy", }}>
+                        <img alt="" style={{height:'100%',width:'100%',magrinLeft:'1110px'}} src={item.img} />
+                    </ImageListItem>
                 ))}
-            </GridList>
+            </ImageList>
         </CImage>
     )
 }

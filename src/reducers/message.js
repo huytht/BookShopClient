@@ -2,8 +2,7 @@ import { SET_MESSAGE, CLEAR_MESSAGE } from "../actions/types";
 
 const initialState = {};
 
-// eslint-disable-next-line func-names
-export default function (state = initialState, action) {
+export default function message(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {

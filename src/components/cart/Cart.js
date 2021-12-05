@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, IconButton, styled } from "@material-ui/core";
+import React, { useEffect } from "react";
+import { Button, Container, IconButton, Link, styled } from "@material-ui/core";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,14 +8,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { useSelector, useDispatch } from "react-redux";
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import IndeterminateCheckBoxOutlinedIcon from '@mui/icons-material/IndeterminateCheckBoxOutlined';
+import { useDispatch } from "react-redux";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
 import {
   IncreaseQuantity,
   DecreaseQuantity,
   DeleteCart,
 } from "../../actions/cart";
+import { useNavigate } from 'react-router-dom';
 
 const Title = styled("h1")({
   paddingLeft: "10px",
@@ -29,13 +30,14 @@ const Title = styled("h1")({
 });
 
 const Cart = () => {
-  const items = useSelector((state) => state.product);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let ListCart = [];
   let TotalCart = 0;
-  Object.keys(items.Carts).forEach(function (item) {
-    TotalCart += items.Carts[item].quantity * items.Carts[item].price;
-    ListCart.push(items.Carts[item]);
+  let cartStorage = JSON.parse(localStorage.getItem("carts")).Carts;
+  Object.keys(cartStorage).forEach(function (item) {
+    TotalCart += cartStorage[item].quantity * cartStorage[item].price;
+    ListCart.push(cartStorage[item]);
   });
 
   function TotalPrice(price, tonggia) {
@@ -56,6 +58,13 @@ const Cart = () => {
   const handleDeleteCart = (index) => {
     dispatch(DeleteCart(index));
   };
+
+  const handlePageReturn = () => {
+    navigate("/");
+  }
+  const handlePageCheckout = () => {
+    navigate("/checkout");
+  }
   return (
     <Container>
       <Title>Giỏ Hàng</Title>
@@ -83,17 +92,26 @@ const Cart = () => {
                   />
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" onClick={() => handleIncreaseQuantity(index)}>
-                    <AddBoxOutlinedIcon  />
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleIncreaseQuantity(index)}
+                  >
+                    <AddBoxOutlinedIcon />
                   </IconButton>
                   {item.quantity}
-                  <IconButton color="primary" onClick={() => handleDecreaseQuantity(index)}>
+                  <IconButton
+                    color="primary"
+                    onClick={() => handleDecreaseQuantity(index)}
+                  >
                     <IndeterminateCheckBoxOutlinedIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton color="secondary" onClick={() => handleDeleteCart(index)}>
-                    <DeleteOutlineOutlinedIcon  />
+                  <IconButton
+                    color="secondary"
+                    onClick={() => handleDeleteCart(index)}
+                  >
+                    <DeleteOutlineOutlinedIcon />
                   </IconButton>
                 </TableCell>
                 <TableCell align="center">
@@ -119,10 +137,7 @@ const Cart = () => {
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell>Phí vận chuyển</TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
-              <TableCell align="center"></TableCell>
+              <TableCell colSpan={4}>Phí vận chuyển</TableCell>
               <TableCell align="center">Miễn phí</TableCell>
             </TableRow>
             <TableRow>
@@ -132,6 +147,44 @@ const Cart = () => {
                   style: "currency",
                   currency: "VND",
                 })}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={3} />
+              <TableCell>
+                <Button
+                  style={{
+                    backgroundColor: "#CECDCD",
+                    color: "black",
+                    fontWeight: "bold",
+                    height: "50px",
+                    marginTop: "25px",
+                    borderRadius: "0px",
+                    textDecoration: "none",
+                  }}
+                  onClick={handlePageReturn}
+                  fullWidth
+                  variant="outlined"
+                >
+                  Quay lại
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button
+                  style={{
+                    backgroundColor: "#FDC92D",
+                    color: "black",
+                    fontWeight: "bold",
+                    height: "50px",
+                    marginTop: "25px",
+                    borderRadius: "0px",
+                  }}
+                  fullWidth
+                  variant="outlined"
+                  onClick={handlePageCheckout}
+                >
+                  Thanh toán
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>

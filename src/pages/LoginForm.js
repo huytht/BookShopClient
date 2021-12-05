@@ -6,12 +6,13 @@ import Link from "@mui/material/Link";
 import { useRef, useState } from "react";
 import { login } from "../actions/auth";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { clearMessage } from "../actions/message";
 
 const required = (value) => {
   if (!value) {
@@ -31,7 +32,7 @@ export const LoginForm = () => {
   let form = useRef();
   let checkBtn = useRef();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [value, setValue] = useState({
     username: "",
@@ -56,11 +57,12 @@ export const LoginForm = () => {
     });
 
     form.validateAll();
+    dispatch(clearMessage());
 
     if (checkBtn.context._errors.length === 0) {
       dispatch(login(value.username, value.password))
         .then(() => {
-          navigate("/");
+          // navigate("/");
         })
         .catch(() => {
           setValue({
@@ -91,6 +93,7 @@ export const LoginForm = () => {
           className="form-control"
           onChange={handleChange}
           value={value.username}
+          variant="outlined"
           name="username"
           validations={[required]}
           style={{ width: "100%" }}
@@ -103,15 +106,12 @@ export const LoginForm = () => {
           type="password"
           onChange={handleChange}
           className="form-control"
+          variant="outlined"
           name="password"
           value={value.password}
           validations={[required]}
           style={{ width: "100%" }}
         />
-        {/* <FormControlLabel
-          control={<Checkbox name="checkedB" color="primary" />}
-          label="Remember me"
-        /> */}
         <Button
           type="submit"
           color="primary"
@@ -143,10 +143,10 @@ export const LoginForm = () => {
       <Typography>
         <Link href="#">Quên mật khẩu?</Link>
       </Typography>
-      <Typography>
+      {/* <Typography>
         {" "}
         Bạn không có tài khoản? <Link href="#">Đăng ký</Link>
-      </Typography>
+      </Typography> */}
     </Grid>
   );
 };
