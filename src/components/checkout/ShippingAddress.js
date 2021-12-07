@@ -28,7 +28,7 @@ export const ShippingAddress = ({
 }) => {
   const [values, setValues] = useState({});
   const [townDistrict, setTownDistrict] = useState([{}]);
-  const [shippingAddress, setShippingAddress] = useState(JSON.parse(localStorage.getItem("shippingAddress")).town_district !== "" ? JSON.parse(localStorage.getItem("shippingAddress")) : initShippingAddress);
+  const [shippingAddress, setShippingAddress] = useState(JSON.parse(localStorage.getItem("shippingAddress"))?.town_district !== null ? JSON.parse(localStorage.getItem("shippingAddress")) : initShippingAddress);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -43,9 +43,9 @@ export const ShippingAddress = ({
   };
 
   useEffect(() => {
-    if (shippingAddress.province_city !== "") {
+    if (shippingAddress?.province_city !== "") {
       callApi(
-        `province-city/get-town-district-by-province-city/${shippingAddress.province_city}`,
+        `province-city/get-town-district-by-province-city/${shippingAddress?.province_city}`,
         "GET",
         null
       ).then((res) => setTownDistrict(res.data));
@@ -162,7 +162,7 @@ export const ShippingAddress = ({
               label="Tỉnh/thành"
               onChange={handleChange}
               select
-              value={shippingAddress.province_city}
+              value={shippingAddress?.province_city}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {provinceCityList.map((option) => (
@@ -180,7 +180,7 @@ export const ShippingAddress = ({
               label="Quận/huyện"
               onChange={handleChange}
               select
-              value={shippingAddress.town_district}
+              value={shippingAddress?.town_district}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {townDistrict.map((option) => (
@@ -195,7 +195,7 @@ export const ShippingAddress = ({
               fullWidth
               label="Địa chỉ (đường, phường, xã, ...)"
               name="street"
-              value={shippingAddress.street}
+              value={shippingAddress?.street}
               onChange={handleChange}
             />
           </Grid>
@@ -205,7 +205,7 @@ export const ShippingAddress = ({
               label="Zip/Postal code"
               name="zip_code"
               placeholder="70000"
-              value={shippingAddress.zip_code}
+              value={shippingAddress?.zip_code}
               onChange={handleChange}
             />
           </Grid>
