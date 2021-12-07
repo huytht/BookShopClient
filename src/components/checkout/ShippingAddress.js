@@ -3,7 +3,6 @@ import {
   Grid,
   TextField,
   FormControlLabel,
-  Checkbox,
   CardContent,
   CardHeader,
   Divider,
@@ -13,14 +12,23 @@ import {
   Select,
 } from "@mui/material";
 import moment from "moment";
+import callApi from "../../api";
+
+const initShippingAddress = {
+  province_city: 26,
+  town_district: "",
+  street: "",
+  zip_code: 0,
+}
 
 export const ShippingAddress = ({
   user,
   provinceCityList,
-  TownDistrictList,
+  townDistrictList,
 }) => {
   const [values, setValues] = useState({});
-  const [shippingAddress, setShippingAddress] = useState({})
+  const [townDistrict, setTownDistrict] = useState([{}]);
+  const [shippingAddress, setShippingAddress] = useState(JSON.parse(localStorage.getItem("shippingAddress")).town_district !== "" ? JSON.parse(localStorage.getItem("shippingAddress")) : initShippingAddress);
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -28,7 +36,22 @@ export const ShippingAddress = ({
       ...values,
       [event.target.name]: event.target.value,
     });
+    setShippingAddress({
+      ...shippingAddress,
+      [event.target.name]: event.target.value,
+    });
   };
+
+  useEffect(() => {
+    if (shippingAddress.province_city !== "") {
+      callApi(
+        `province-city/get-town-district-by-province-city/${shippingAddress.province_city}`,
+        "GET",
+        null
+      ).then((res) => setTownDistrict(res.data));
+    }
+    localStorage.setItem("shippingAddress", JSON.stringify(shippingAddress));
+  }, [shippingAddress]);
 
   useEffect(() => {
     setValues({
@@ -135,10 +158,11 @@ export const ShippingAddress = ({
             <InputLabel id="province_city">Tỉnh/thành</InputLabel>
             <Select
               fullWidth
-              // labelId="province_city"
               name="province_city"
               label="Tỉnh/thành"
+              onChange={handleChange}
               select
+              value={shippingAddress.province_city}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {provinceCityList.map((option) => (
@@ -148,19 +172,31 @@ export const ShippingAddress = ({
               ))}
             </Select>
           </Grid>
-          {/* <Grid item xs={12}>
-            <TextField
+          <Grid item xs={12}>
+            <InputLabel id="town_district">Quận/huyện</InputLabel>
+            <Select
               fullWidth
-              label="Quận/huyện"
               name="town_district"
+              label="Quận/huyện"
+              onChange={handleChange}
               select
-            />
-          </Grid> */}
+              value={shippingAddress.town_district}
+              MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
+            >
+              {townDistrict.map((option) => (
+                <MenuItem key={option?.code} value={option?.code}>
+                  {option?.name_with_type}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
           <Grid item xs={12}>
             <TextField
               fullWidth
               label="Địa chỉ (đường, phường, xã, ...)"
               name="street"
+              value={shippingAddress.street}
+              onChange={handleChange}
             />
           </Grid>
           <Grid item xs={12}>
@@ -169,6 +205,8 @@ export const ShippingAddress = ({
               label="Zip/Postal code"
               name="zip_code"
               placeholder="70000"
+              value={shippingAddress.zip_code}
+              onChange={handleChange}
             />
           </Grid>
         </Grid>
