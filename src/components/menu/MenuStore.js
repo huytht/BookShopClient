@@ -10,7 +10,7 @@ import { Paper } from "@material-ui/core";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Popper from "@mui/material/Popper";
-
+import { Link } from "react-router-dom";
 import { GridList, GridListTile } from "@material-ui/core";
 import { AspectRatio } from "@material-ui/icons";
 import { display, height } from "@mui/system";
@@ -183,13 +183,15 @@ const MenuStore = () => {
                         style={{ marginTop: "1ch" }}
                       >
                         {cate.map((option, index) => (
-                          <MenuItem
-                            key={index}
-                            style={{ width: "22ch", justifyContent: "center" }}
-                            onClick={handleClose}
-                          >
-                            {option}
-                          </MenuItem>
+                          <Link style={{textDecoration:'none'}} to='/bookcate'>
+                            <MenuItem
+                              key={index}
+                              style={{ width: "22ch", justifyContent: "center" }}
+                              onClick={handleClose}
+                            >
+                              {option}
+                            </MenuItem>
+                          </Link>
                         ))}
                       </MenuList>
                     </ClickAwayListener>

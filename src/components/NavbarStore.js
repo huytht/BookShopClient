@@ -28,6 +28,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 
 const Container = styled("div")({
   height: 75,
@@ -176,9 +177,9 @@ const NavbarStore = () => {
         <Left>
           <SearchContainer>
             <Input />
-            <Button>
+            <Link to='/search'>
               <Search />
-            </Button>
+            </Link>             
           </SearchContainer>
         </Left>
         <Center>
@@ -283,6 +284,22 @@ const NavbarStore = () => {
                                 <ListItemText
                                   primary={userInfo?.fullname}
                                   secondary="Xem thông tin cá nhân của bạn"
+                                />
+                              </Link>
+                            </ListItem>
+                            
+                            <ListItem>
+                              <ListItemAvatar>
+                               <DescriptionOutlinedIcon/>
+                              </ListItemAvatar>
+                              <Link
+                                style={{ textDecoration: "none" }}
+                                onClick={handleCloseSetting}
+                                to="/order"
+                              >
+                                <ListItemText
+                                  primary="Thông tin đơn hàng"
+                                  secondary="Xem thông tin đơn hàng"
                                 />
                               </Link>
                             </ListItem>

@@ -79,3 +79,20 @@ export const ListComment = [
     },
 
 ]
+export const cate =[
+    'Tiểu thuyết',
+    'Trinh thám',
+    'Blockchain',
+    'Sách mới',
+    'Lập trình',
+    'Hài hước',
+    'Ngôn tình',
+    'Truyện Kiều',
+    'Tiểu thuyết',
+    'Trinh thám',
+    'Blockchain',
+    'Sách mới',
+    'Lập trình',
+    'Hài hước',
+    'Ngôn tình',
+]
