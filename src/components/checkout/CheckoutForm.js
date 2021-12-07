@@ -22,6 +22,7 @@ export const CheckoutForm = () => {
   const [userInfo, setUserInfo] = useState({});
   const [provinceCity, setProvinceCity] = useState([{}]);
   const [townDistrict, setTownDistrict] = useState([{}]);
+  const [payment, setPayment] = useState([{}]);
   const { user } = useSelector((state) => state.auth);
 
   const handleNext = () => {
@@ -45,6 +46,12 @@ export const CheckoutForm = () => {
   useEffect(() => {
     callApi(`town-district`, "GET", null).then((res) =>
       setTownDistrict(res.data)
+    );
+  }, []);
+
+  useEffect(() => {
+    callApi(`payment`, "GET", null).then((res) =>
+      setPayment(res.data)
     );
   }, []);
 
@@ -74,7 +81,13 @@ export const CheckoutForm = () => {
           />
         );
       case 1:
-        return <Payment />;
+        return (
+          <Payment
+            provinceCityList={provinceCity}
+            townDistrictList={townDistrict}
+            paymentList={payment}
+          />
+        );
       case 2:
         return <Confirmation />;
 
