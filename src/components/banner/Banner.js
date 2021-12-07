@@ -8,7 +8,7 @@ const itemData = [
       id:1,
       img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363488_final1511.jpg',
       title: 'Bed',
-      cols:2
+      cols:4
     },
     {
         id:2,
@@ -35,12 +35,7 @@ const itemData = [
     cols:2
   }
   ,
-  {
-      id:5,
-    img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg',
-    title: 'Sink',
-    cols:2
-  }
+  
 ]
 const CImage = styled('div')(
     {

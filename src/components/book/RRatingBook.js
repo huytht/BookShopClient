@@ -16,6 +16,7 @@ import Box from "@mui/material/Box";
 import { useSelector } from "react-redux";
 import callApi from "../../api";
 import { Navigate, useNavigate } from 'react-router-dom';
+import usePagination from "../pagination/PaginationItem";
 
 const Title = styled("h1")({
   marginLeft: "10px",
@@ -34,6 +35,13 @@ const Content = styled("div")({
 });
 
 const RRatingBook = ({ props }) => {
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 4;
+
+  const count = Math.ceil(props.length / PER_PAGE);
+
+  const _DATA = usePagination(props, PER_PAGE);
+  
   const { user } = useSelector((state) => state.auth);
   const { _product } = useSelector((state) => state.product);
   const navigate = useNavigate();
@@ -68,7 +76,10 @@ const RRatingBook = ({ props }) => {
         .then((res) => console.log(res.data));
     }
   };
-
+  const handleCommentPagination = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
   return (
     <Paper
       elevation={0}
@@ -134,7 +145,7 @@ const RRatingBook = ({ props }) => {
             </Box>
             <div style={{ padding: 14 }} >
               <Title>Bình luận</Title>
-              {props.map((item) => (
+              {_DATA.currentData().map((item) => (
                 <Paper
                   style={{
                     padding: "40px 20px",
@@ -162,12 +173,8 @@ const RRatingBook = ({ props }) => {
                   <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
                 </Paper>
               ))}
-              <Stack spacing={2}>
-                <Pagination
-                  count={10}
-                  size="small"
-                  style={{ marginTop: "20px" }}
-                />
+              <Stack spacing={2}>      
+                 <Pagination count={count} size="small" page={page} onChange={handleCommentPagination} />
               </Stack>
             </div>
           </>

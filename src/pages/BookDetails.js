@@ -16,6 +16,7 @@ import callApi from "../api/index";
 import { useDispatch } from "react-redux";
 import { GetProductDetail } from "../actions/cart";
 import { useSelector } from "react-redux";
+import RelatedBook from "../components/book/RelatedBook"
 
 const Container = styled("div")({});
 
@@ -266,6 +267,7 @@ const BookDetails = () => {
             >
               <Tab label="Chi tiết sách" {...a11yProps(0)} />
               <Tab label="Đánh giá của độc giả" {...a11yProps(1)} />
+              <Tab label="Sách liên quan" {...a11yProps(2)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -273,6 +275,9 @@ const BookDetails = () => {
           </TabPanel>
           <TabPanel value={value} index={1}>
             <RRatingBook props={_product.review} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <RelatedBook/>
           </TabPanel>
         </Box>
       </Wrapper>

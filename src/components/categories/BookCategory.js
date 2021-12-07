@@ -96,8 +96,6 @@ const BookCategory = () => {
     const handleChange = (e, p) => {
       setPage(p);
       _DATA.jump(p);
-     console.log(_DATA)
-     console.log(count)
     };
 
     return (
