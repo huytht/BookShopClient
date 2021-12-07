@@ -1,22 +1,30 @@
-import React, { useEffect } from "react";
-import { Button, Container, IconButton, Link, styled } from "@material-ui/core";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Container,
+  IconButton,
+  Link,
+  styled,
+} from "@mui/material";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import IndeterminateCheckBoxOutlinedIcon from "@mui/icons-material/IndeterminateCheckBoxOutlined";
+
+import { useDispatch, useSelector } from "react-redux";
 import {
   IncreaseQuantity,
   DecreaseQuantity,
   DeleteCart,
 } from "../../actions/cart";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import callApi from "../../api";
 
 const Title = styled("h1")({
   paddingLeft: "10px",
@@ -29,15 +37,18 @@ const Title = styled("h1")({
   justifyContent: "center",
 });
 
-const Cart = () => {
+ const Cart = () => {
+  const { user } = useSelector((state) => state.auth);
+  const { numberCart, Carts } = useSelector((state) => state.product);
+  const [cartStorage, setCartStorage] = useState(
+    JSON.parse(localStorage.getItem("carts")).Carts
+  );
+  const [active, setActive] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let ListCart = [];
   let TotalCart = 0;
-  let cartStorage = JSON.parse(localStorage.getItem("carts")).Carts;
   Object.keys(cartStorage).forEach(function (item) {
     TotalCart += cartStorage[item].quantity * cartStorage[item].price;
-    ListCart.push(cartStorage[item]);
   });
 
   function TotalPrice(price, tonggia) {
@@ -47,11 +58,29 @@ const Cart = () => {
     });
   }
 
+  useEffect(() => {
+    setCartStorage(JSON.parse(localStorage.getItem("carts")).Carts);
+  }, [numberCart]);
+
   const handleIncreaseQuantity = (index) => {
-    dispatch(IncreaseQuantity(index));
+    callApi(`book/get-quantity-active-book/${Carts[index]._id}`).then(
+      (res) => {
+        if (res.data - Carts[index].quantity > 0) {
+          console.log(Carts[index])
+          dispatch(IncreaseQuantity(index));
+        } else {
+          let newArr = [...active];
+          newArr[index] = false;
+          setActive(newArr);
+        }
+      }
+    );
   };
 
   const handleDecreaseQuantity = (index) => {
+    let newArr = [...active];
+    newArr[index] = true;
+    setActive(newArr);
     dispatch(DecreaseQuantity(index));
   };
 
@@ -61,10 +90,10 @@ const Cart = () => {
 
   const handlePageReturn = () => {
     navigate("/");
-  }
+  };
   const handlePageCheckout = () => {
     navigate("/checkout");
-  }
+  };
   return (
     <Container>
       <Title>Giỏ Hàng</Title>
@@ -81,7 +110,7 @@ const Cart = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {ListCart.map((item, index) => (
+            {cartStorage.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.title}</TableCell>
                 <TableCell align="center">
@@ -93,6 +122,7 @@ const Cart = () => {
                 </TableCell>
                 <TableCell align="center">
                   <IconButton
+                    disabled={active[index] === false ? true : false}
                     color="primary"
                     onClick={() => handleIncreaseQuantity(index)}
                   >
@@ -169,23 +199,45 @@ const Cart = () => {
                   Quay lại
                 </Button>
               </TableCell>
-              <TableCell>
-                <Button
-                  style={{
-                    backgroundColor: "#FDC92D",
-                    color: "black",
-                    fontWeight: "bold",
-                    height: "50px",
-                    marginTop: "25px",
-                    borderRadius: "0px",
-                  }}
-                  fullWidth
-                  variant="outlined"
-                  onClick={handlePageCheckout}
-                >
-                  Thanh toán
-                </Button>
-              </TableCell>
+              {user === null ? (
+                <TableCell>
+                  <Button
+                    disabled
+                    style={{
+                      backgroundColor: "#dddddd",
+                      color: "black",
+                      fontWeight: "bold",
+                      height: "50px",
+                      marginTop: "25px",
+                      borderRadius: "0px",
+                      width: "80%",
+                    }}
+                    fullWidth
+                    variant="outlined"
+                    onClick={handlePageCheckout}
+                  >
+                    đăng nhập <br /> để thanh toán
+                  </Button>
+                </TableCell>
+              ) : (
+                <TableCell>
+                  <Button
+                    style={{
+                      backgroundColor: "#FDC92D",
+                      color: "black",
+                      fontWeight: "bold",
+                      height: "50px",
+                      marginTop: "25px",
+                      borderRadius: "0px",
+                    }}
+                    fullWidth
+                    variant="outlined"
+                    onClick={handlePageCheckout}
+                  >
+                    Thanh toán
+                  </Button>
+                </TableCell>
+              )}
             </TableRow>
           </TableBody>
         </Table>
@@ -193,5 +245,4 @@ const Cart = () => {
     </Container>
   );
 };
-
 export default Cart;
