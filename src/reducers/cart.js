@@ -31,7 +31,7 @@ const initProduct = {
   _productNewList: [],
 };
 
-export default function product(state = initProduct, action) {
+export const product = (state = initProduct, action) => {
   switch (action.type) {
     case GET_ALL_PRODUCT:
       return {
@@ -108,14 +108,26 @@ export default function product(state = initProduct, action) {
         ...state,
       };
     case DELETE_CART:
-      let quantity_ = state.Carts[action.payload].quantity;
-      return {
-        ...state,
-        numberCart: state.numberCart - quantity_,
-        Carts: state.Carts.filter((item) => {
-          return item._id !== state.Carts[action.payload]._id;
-        }),
-      };
+      if (
+        state.Carts[action.payload].quantity === numberCart ||
+        state.Carts[action.payload].quantity === undefined
+      )
+        return {
+          ...state,
+          numberCart: 0,
+          Carts: [],
+        };
+      else {
+        let quantity_ = state.Carts[action.payload].quantity;
+        return {
+          ...state,
+          numberCart: state.numberCart - quantity_,
+          Carts: state.Carts.filter((item) => {
+            return item._id !== state.Carts[action.payload]._id;
+          }),
+        };
+      }
+
     case DELETE_ALL_CART:
       return {
         ...state,
@@ -125,4 +137,4 @@ export default function product(state = initProduct, action) {
     default:
       return state;
   }
-}
+};
