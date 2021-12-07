@@ -71,9 +71,6 @@ const Titleh3 = styled('h3')(
     }
 )
 const BookSearchList = () => {
-
-
-
     const { _products } = useSelector((state) => state.product);
     const dispatch = useDispatch();
     useEffect(() => {
@@ -81,7 +78,6 @@ const BookSearchList = () => {
             dispatch(GetAllProduct(res.data));
         });
     }, []);
-
     const handleAddToCart = (item) => {
         console.log(item);
         dispatch(AddCart(item));

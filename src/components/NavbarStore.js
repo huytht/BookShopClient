@@ -29,6 +29,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import SearchBar from "material-ui-search-bar";
+import {  GetAllProduct } from "../actions/cart"
 
 const Container = styled("div")({
   height: 75,
@@ -93,6 +95,7 @@ const style = {
 };
 
 const NavbarStore = () => {
+  
   const { numberCart } = useSelector((state) => state.product);
   const { isLoggedIn, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -171,15 +174,15 @@ const NavbarStore = () => {
     if (isLoggedIn) setOpen(false);
   }, [isLoggedIn]);
 
+  
+  
   return (
+    
     <Container>
       <Wrapper>
         <Left>
           <SearchContainer>
-            <Input />
-            <Link to='/search'>
-              <Search />
-            </Link>             
+           <SearchBar/>         
           </SearchContainer>
         </Left>
         <Center>
