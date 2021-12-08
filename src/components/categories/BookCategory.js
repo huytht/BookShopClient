@@ -134,9 +134,9 @@ const BookCategory = () => {
               <Link style={{ textDecoration: "none" }} to="/">
                 Danh mục thể loại
               </Link>
-              <Link style={{ textDecoration: "none" }} to="/">
+              <Typography color="text.primary">
                 {category.name}
-              </Link>
+              </Typography>
             </Breadcrumbs>
             <Titleh3>{category.name}</Titleh3>
             <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
