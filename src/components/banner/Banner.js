@@ -1,12 +1,11 @@
 import React from "react";
 import { Box, styled } from "@material-ui/core";
 import { ImageList,ImageListItem } from "@material-ui/core";
-
-
+import { Link } from "react-router-dom";
 const itemData = [
     {
-      id:1,
-      img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363488_final1511.jpg',
+      id:9,
+      img:'/imagebanner/Copy of Nature Welcome Church Template - Made with PosterMyWall.jpg',
       title: 'Bed',
       cols:4
     },
@@ -51,10 +50,15 @@ const Banner = () => {
     return (
         <CImage >
             <ImageList rowHeight={182.5} cols={4} >
+              
                 {itemData.map((item, index) => (
+                
                     <ImageListItem key={index} cols={item.cols || 1} style={{ loading: "lazy", }}>
+                        <Link to={`/book?id=${item.id}`}>
                         <img alt="" style={{height:'100%',width:'100%',magrinLeft:'1110px'}} src={item.img} />
+                        </Link>
                     </ImageListItem>
+                   
                 ))}
             </ImageList>
         </CImage>

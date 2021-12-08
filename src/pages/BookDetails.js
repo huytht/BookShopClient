@@ -278,12 +278,13 @@ const BookDetails = () => {
                   </div>
                 </Info>
 
-                <Link to="/cart">
+                <Link style={{textDecoration:'none'}} to="/cart">
                   <Button
                     style={{
                       backgroundColor: "green",
                       color: "white",
                       fontWeight: "bold",
+                      
                       height: "50px",
                       marginTop: "10px",
                       borderRadius: "0px",
