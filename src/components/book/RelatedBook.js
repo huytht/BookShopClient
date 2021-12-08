@@ -7,8 +7,18 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import StarIcon from "@mui/icons-material/Star";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import callApi from './../../api/index';
+import { GetProductDetail } from './../../actions/product';
 
 const RelatedBook = ({ props }) => {
+  const dispatch = useDispatch();
+
+  const handleChangeBook = (id) => {
+    callApi(`book/get-book/${id}`, "GET", null).then((res) => {
+      dispatch(GetProductDetail(res.data));
+    });
+  }
   return (
     <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
       {props.map((item, key) => (
@@ -39,7 +49,7 @@ const RelatedBook = ({ props }) => {
                     variant="h6"
                     style={{ alignItems: "center" }}
                   >
-                    <Link to={`/book?id=${item._id}`} style={{ textDecoration: 'none' }}>
+                    <Link onClick={() => handleChangeBook(item._id)} to={`/book?id=${item._id}`} style={{ textDecoration: 'none' }}>
                       <ListItemText
                         primary={
                           <Typography
