@@ -98,7 +98,7 @@ const BookDetails = () => {
     callApi(`book/get-book/${params.get("id")}`, "GET", null).then((res) => {
       dispatch(GetProductDetail(res.data));
     });
-  }, [params.get("id"), dispatch]);
+  }, [params, dispatch]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
