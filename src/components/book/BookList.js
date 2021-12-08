@@ -177,7 +177,7 @@ const BookList = () => {
         </Grid>
         <Title>Sách Mới Cập Nhật</Title>
         <ViewMore>
-          <Link to="/bookcate?id=1">
+          <Link to="/bookcate?id=16">
             <Button
               sx={{
                 background: "green",

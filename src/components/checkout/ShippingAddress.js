@@ -19,16 +19,32 @@ const initShippingAddress = {
   town_district: "",
   street: "",
   zip_code: 0,
-}
+};
 
 export const ShippingAddress = ({
   user,
   provinceCityList,
   townDistrictList,
 }) => {
-  const [values, setValues] = useState({});
+  const initUser = {
+    firstName: user.fullname?.split(" ").slice(-1).join(" "),
+    lastName: user.fullname?.split(" ").slice(0, -1).join(" "),
+    username: user.username,
+    date_of_birth: moment.unix(user.date_of_birth).format("yyyy-MM-DD"),
+    email: user.email,
+    phone: user.phone,
+  };
+  const [values, setValues] = useState(
+    JSON.parse(localStorage.getItem("userOrder")) !== null
+      ? JSON.parse(localStorage.getItem("userOrder"))
+      : initUser
+  );
   const [townDistrict, setTownDistrict] = useState([{}]);
-  const [shippingAddress, setShippingAddress] = useState(JSON.parse(localStorage.getItem("shippingAddress"))?.town_district !== null ? JSON.parse(localStorage.getItem("shippingAddress")) : initShippingAddress);
+  const [shippingAddress, setShippingAddress] = useState(
+    JSON.parse(localStorage.getItem("shippingAddress"))?.town_district !== null
+      ? JSON.parse(localStorage.getItem("shippingAddress"))
+      : initShippingAddress
+  );
 
   const handleChange = (event) => {
     event.preventDefault();
@@ -54,15 +70,8 @@ export const ShippingAddress = ({
   }, [shippingAddress]);
 
   useEffect(() => {
-    setValues({
-      firstName: user.fullname?.split(" ").slice(-1).join(" "),
-      lastName: user.fullname?.split(" ").slice(0, -1).join(" "),
-      username: user.username,
-      date_of_birth: moment.unix(user.date_of_birth).format("yyyy-MM-DD"),
-      email: user.email,
-      phone: user.phone,
-    });
-  }, [user]);
+    localStorage.setItem("userOrder", JSON.stringify(values));
+  }, [values]);
 
   return (
     <>
@@ -79,7 +88,7 @@ export const ShippingAddress = ({
               label="Tên"
               name="firstName"
               onChange={handleChange}
-              value={values.firstName}
+              value={values?.firstName}
               placeholder="Nhập tên của bạn"
             />
           </Grid>
@@ -93,7 +102,7 @@ export const ShippingAddress = ({
               name="lastName"
               placeholder="Nhập họ và tên đệm của bạn"
               onChange={handleChange}
-              value={values.lastName}
+              value={values?.lastName}
             />
           </Grid>
           <Grid item xs={6}>
@@ -103,7 +112,7 @@ export const ShippingAddress = ({
                 shrink: true,
               }}
               onChange={handleChange}
-              value={values.date_of_birth}
+              value={values?.date_of_birth}
               label="Date of birth"
               name="date"
               type="date"
@@ -119,7 +128,7 @@ export const ShippingAddress = ({
               name="phone"
               placeholder="09xxxxxx"
               onChange={handleChange}
-              value={values.phone}
+              value={values?.phone}
             />
           </Grid>
           <Grid item xs={12}>
@@ -131,7 +140,7 @@ export const ShippingAddress = ({
               label="Email"
               name="email"
               onChange={handleChange}
-              value={values.email}
+              value={values?.email}
             />
           </Grid>
         </Grid>

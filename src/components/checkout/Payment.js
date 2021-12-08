@@ -20,6 +20,13 @@ const initShippingAddress = {
   zip_code: 0,
 }
 
+const initPayment = {
+  payment_id: 1,
+  card_number: "",
+  expire_date: "",
+  security_number: ""
+}
+
 export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => {
   const [sameShippingAddress, setSameShippingAddress] = useState(localStorage.getItem("sameShippingAddress") !== undefined ? localStorage.getItem("sameShippingAddress") : false);
 
@@ -29,7 +36,7 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
   };
 
   const [townDistrict, setTownDistrict] = useState([{}]);
-  const [payment, setPayment] = useState({})
+  const [payment, setPayment] = useState(JSON.parse(localStorage.getItem("payment"))?.id !== null ? JSON.parse(localStorage.getItem("payment")) : initPayment);
   const [billingAddress, setBillingAddress] = useState(initShippingAddress);
 
   const handleChange = (event) => {
@@ -43,6 +50,12 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
       [event.target.name]: event.target.value,
     });
   };
+
+  useEffect(() => {
+    if (payment.payment_id !== "") {
+      localStorage.setItem("payment", JSON.stringify(payment));
+    }
+  }, [payment]);
 
   useEffect(() => {
     if (sameShippingAddress) {
@@ -151,7 +164,7 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
               label="Loại thẻ"
               onChange={handleChange}
               select
-              value={payment.id}
+              value={payment.payment_id}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {paymentList.map((option) => (
@@ -165,6 +178,8 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
             <TextField
               fullWidth
               label="Số thẻ"
+              onChange={handleChange}
+              value={payment.card_number}
               name="card_number"
               placeholder="xxxx-xxxx-xxxx-xxxx"
             />
@@ -173,7 +188,9 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
             <TextField
               fullWidth
               label="Ngày hết hạn"
-              name="expiry date"
+              name="expire_date"
+              value={payment.expire_date}
+              onChange={handleChange}
               type="date"
               InputLabelProps={{
                 shrink: true,
@@ -183,7 +200,9 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
           <Grid item xs={6}>
             <TextField
               fullWidth
+              onChange={handleChange}
               label="Mã bảo vệ"
+              value={payment.security_code}
               name="security_code"
               placeholder="xxx"
             />
