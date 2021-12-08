@@ -185,8 +185,8 @@ const BookCategory = () => {
                                   <Typography
                                     style={{ fontWeight: "bold", fontSize: 18 }}
                                   >
-                                    {item.title.length > 15
-                                      ? item.title.substr(0, 15).concat("...")
+                                    {item.title.length > 11
+                                      ? item.title.substr(0, 11).concat("...")
                                       : item.title}
                                   </Typography>
                                 }

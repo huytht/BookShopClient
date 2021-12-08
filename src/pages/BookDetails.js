@@ -141,10 +141,10 @@ const BookDetails = () => {
             >
               <Paper elevation={0} style={{}}>
                 <Grid sx={{ height: "100%" }} container spacing={2}>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={5}>
                     <Box
                       sx={{
-                        width: 500,
+                        width: "100%",
                         height: 480,
                         m: 1,
                         direction: "column",
@@ -152,7 +152,7 @@ const BookDetails = () => {
                     >
                       <img
                         style={{
-                          width: 500,
+                          width: "100%",
                           height: 480,
                         }}
                         alt=""
@@ -160,7 +160,7 @@ const BookDetails = () => {
                       />
                     </Box>
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid item xs={12} md={7}>
                     <Box
                       style={{
                         width: "100%",
