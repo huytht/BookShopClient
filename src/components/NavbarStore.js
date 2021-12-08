@@ -30,7 +30,6 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SearchBar from "material-ui-search-bar";
-import {  GetAllProduct } from "../actions/cart"
 
 const Container = styled("div")({
   height: 75,
@@ -103,6 +102,7 @@ const NavbarStore = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -133,6 +133,14 @@ const NavbarStore = () => {
 
     setOpenSetting(false);
   };
+
+  const handleChange = (keyword) => {
+    setValue(keyword);
+  }
+
+  const handleRequestSearch = () => {
+    navigate(`/search?keyword=${value}`);
+  }
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(openSetting);
@@ -174,15 +182,13 @@ const NavbarStore = () => {
     if (isLoggedIn) setOpen(false);
   }, [isLoggedIn]);
 
-  
-  
   return (
     
     <Container>
       <Wrapper>
         <Left>
           <SearchContainer>
-           <SearchBar/>         
+           <SearchBar style={{ width: 300 }} value={value} onChange={handleChange} placeholder="TÌm kiếm theo tựa sách" onRequestSearch={handleRequestSearch}/>         
           </SearchContainer>
         </Left>
         <Center>

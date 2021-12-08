@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@material-ui/core";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 import { GridList, GridListTile } from "@material-ui/core";
 import { AspectRatio } from "@material-ui/icons";
 import { display, height } from "@mui/system";
+import callApi from './../../api/index';
+import { GetAllCategory } from "../../actions/product";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled("div")({
   height: 60,
@@ -30,75 +33,18 @@ const Right = styled("div")({
   flex: 1,
 });
 
-const cate = [
-  "Tiểu thuyết",
-  "Trinh thám",
-  "Blockchain",
-  "Sách mới",
-  "Lập trình",
-  "Hài hước",
-  "Ngôn tình",
-  "Truyện Kiều",
-  "Tiểu thuyết",
-  "Trinh thám",
-  "Blockchain",
-  "Sách mới",
-  "Lập trình",
-  "Hài hước",
-  "Ngôn tình",
-];
-const itemData = [
-  {
-    id: 1,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363488_final1511.jpg",
-    title: "Bed",
-    cols: 4,
-  },
-  {
-    id: 2,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363107_05.jpg",
-    title: "Books",
-    cols: 2,
-  },
-  {
-    id: 3,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg",
-    title: "Sink",
-    cols: 2,
-  },
-  {
-    id: 4,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363107_05.jpg",
-    title: "Books",
-    cols: 2,
-  },
-  {
-    id: 5,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg",
-    title: "Sink",
-    cols: 2,
-  },
-];
-const itemData2 = [
-  {
-    id: 1,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363488_final1511.jpg",
-    title: "Bed",
-  },
-  {
-    id: 2,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363107_05.jpg",
-    title: "Books",
-  },
-  {
-    id: 3,
-    img: "https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg",
-    title: "Sink",
-  },
-];
 const MenuStore = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const { _categories } = useSelector(state => state.product)
+  const dispatch = useDispatch();
   const anchorRef = React.useRef(null);
+  const params = new URL(document.location);
+
+  useEffect(() => {
+    if (params.pathname.includes("bookcate") || params.pathname.includes("search")) {
+      setOpen(false);
+    }
+  }, [params])
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -111,6 +57,11 @@ const MenuStore = () => {
 
     setOpen(false);
   };
+
+  useEffect(() => {
+    callApi('category', 'GET', null)
+    .then(res => dispatch(GetAllCategory(res.data)))
+  },[])
 
   const handleListKeyDown = (event) => {
     if (event.key === "Tab") {
@@ -162,7 +113,6 @@ const MenuStore = () => {
               role={undefined}
               placement="bottom-start"
               transition
-              // disablePortal
             >
               {({ TransitionProps, placement }) => (
                 <Grow
@@ -182,14 +132,14 @@ const MenuStore = () => {
                         onKeyDown={handleListKeyDown}
                         style={{ marginTop: "1ch" }}
                       >
-                        {cate.map((option, index) => (
-                          <Link style={{textDecoration:'none'}} to='/bookcate'>
+                        {_categories.map((option) => (
+                          <Link key={option._id} style={{textDecoration:'none'}} to={`/bookcate?id=${option._id}`}>
                             <MenuItem
-                              key={index}
+                              key={option._id}
                               style={{ width: "22ch", justifyContent: "center" }}
                               onClick={handleClose}
                             >
-                              {option}
+                              {option.name}
                             </MenuItem>
                           </Link>
                         ))}

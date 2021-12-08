@@ -1,5 +1,25 @@
 
-/*GET_ALL_PRODUCT*/
+export function GetAllCategory(payload){
+    return{
+        type:'GET_ALL_CATEGORY',
+        payload
+    }
+}
+
+export function GetAllProductByKeyword(payload){
+    return{
+        type:'GET_ALL_PRODUCT_BY_KEYWORD',
+        payload
+    }
+}
+
+export function GetAllProductByCategory(payload){
+    return{
+        type:'GET_ALL_PRODUCT_BY_CATEGORY',
+        payload
+    }
+}
+
 export function GetAllProduct(payload){
     return{
         type:'GET_ALL_PRODUCT',

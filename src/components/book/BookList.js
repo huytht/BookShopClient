@@ -7,18 +7,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@material-ui/core";
-import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import callApi from "../../api";
-import {
-  AddCart,
-  GetAllProduct,
-  GetAllProductBest,
-  GetAllProductNew,
-} from "../../actions/cart";
+import { GetAllProductBest, GetAllProductNew } from "../../actions/product";
 import { Divider, ListItemText, Rating } from "@mui/material";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
 
 const Container = styled("div")({
   display: "flex",
@@ -46,10 +40,9 @@ const ViewMore = styled("div")({
 });
 
 const BookList = () => {
-  const { _productBestList, _productNewList, Carts } = useSelector(
+  const { _productBestList, _productNewList } = useSelector(
     (state) => state.product
   );
-  const [active, setActive] = useState([true]);
   const dispatch = useDispatch();
   useEffect(() => {
     callApi("book/list-best-book", "GET", null).then((res) => {
@@ -60,29 +53,28 @@ const BookList = () => {
     });
   }, []);
 
-  
-
   return (
     <Container>
       <Wrapper>
         <Title>Sách Hay</Title>
         <ViewMore>
-          <Button
-            sx={{
-              background: "green",
-              color: "white",
-              "&:hover": {
+          <Link to="/bookcate?id=1">
+            <Button
+              sx={{
                 background: "green",
-              },
-            }}
-          >
-            Xem Thêm
-          </Button>
+                color: "white",
+                "&:hover": {
+                  background: "green",
+                },
+              }}
+            >
+              Xem Thêm
+            </Button>
+          </Link>
         </ViewMore>
-
         <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
           {_productBestList.map((item, key) => (
-            <Grid key={item._id} item xs={6} md={3} style={{ padding: 30 }}>
+            <Grid key={item._id} item xs={6} md={3} style={{ padding: 5 }}>
               <Card
                 sx={{
                   marginTop: 1,
@@ -120,8 +112,8 @@ const BookList = () => {
                               <Typography
                                 style={{ fontWeight: "bold", fontSize: 18 }}
                               >
-                                {item.title.length > 12
-                                  ? item.title.substr(0, 12).concat("...")
+                                {item.title.length > 15
+                                  ? item.title.substr(0, 15).concat("...")
                                   : item.title}
                               </Typography>
                             }
@@ -151,21 +143,17 @@ const BookList = () => {
                     <Grid item xs={5}>
                       <ListItemText
                         primary={
-                          <Typography
-                            style={{ fontSize: 20 }}
-                          >
+                          <Typography style={{ fontSize: 20 }}>
                             Đánh giá
                           </Typography>
                         }
                         disableTypography
                         secondary={
-                          <Typography>
-                            {item.review.length > 0
-                              ? item.rate
-                              : "Chưa có đánh giá"}
-                            {item.review.length > 0 && (
+                          <Typography style={{ display: "flex" }}>
+                            {item.review > 0 ? item.rate : "Chưa có đánh giá"}
+                            {item.review > 0 && (
                               <StarIcon
-                                style={{ fontSize: 20, color: "yellow" }}
+                                style={{ fontSize: 22, color: "yellow" }}
                               />
                             )}
                           </Typography>
@@ -189,21 +177,23 @@ const BookList = () => {
         </Grid>
         <Title>Sách Mới Cập Nhật</Title>
         <ViewMore>
-          <Button
-            sx={{
-              background: "green",
-              color: "white",
-              "&:hover": {
+          <Link to="/bookcate?id=1">
+            <Button
+              sx={{
                 background: "green",
-              },
-            }}
-          >
-            Xem Thêm
-          </Button>
+                color: "white",
+                "&:hover": {
+                  background: "green",
+                },
+              }}
+            >
+              Xem Thêm
+            </Button>
+          </Link>
         </ViewMore>
         <Grid container spacing={2} direction="row" sx={{ width: "auto" }}>
-          {_productNewList.map((item, key) => (
-            <Grid key={item._id} item xs={6} md={3} style={{ padding: 30 }}>
+          {_productNewList.map((item) => (
+            <Grid key={item._id} item xs={6} md={3} style={{ padding: 5 }}>
               <Card
                 sx={{
                   marginTop: 1,
@@ -241,8 +231,8 @@ const BookList = () => {
                               <Typography
                                 style={{ fontWeight: "bold", fontSize: 18 }}
                               >
-                                {item.title.length > 12
-                                  ? item.title.substr(0, 12).concat("...")
+                                {item.title.length > 15
+                                  ? item.title.substr(0, 15).concat("...")
                                   : item.title}
                               </Typography>
                             }
@@ -263,7 +253,6 @@ const BookList = () => {
                 <Grid sx={{ height: "100%" }} container spacing={2}>
                   <CardActions
                     sx={{
-                      // justifyContent: "center",
                       height: "90px",
                       width: "100%",
                     }}
@@ -272,21 +261,17 @@ const BookList = () => {
                     <Grid item xs={5}>
                       <ListItemText
                         primary={
-                          <Typography
-                          style={{ fontSize: 20 }}
-                          >
+                          <Typography style={{ fontSize: 20 }}>
                             Đánh giá
                           </Typography>
                         }
                         disableTypography
                         secondary={
-                          <Typography>
-                            {item.review.length > 0
-                              ? item.rate
-                              : "Chưa có đánh giá"}
-                            {item.review.length > 0 && (
+                          <Typography style={{ display: "flex" }}>
+                            {item.review > 0 ? item.rate : "Chưa có đánh giá"}
+                            {item.review > 0 && (
                               <StarIcon
-                                style={{ fontSize: 20, color: 'yellow' }}
+                                style={{ fontSize: 22, color: "yellow" }}
                               />
                             )}
                           </Typography>

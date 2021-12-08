@@ -9,8 +9,11 @@ import {
   INCREASE_QUANTITY,
   DELETE_CART,
   DELETE_ALL_CART,
+  GET_ALL_CATEGORY,
+  GET_ALL_PRODUCT_BY_CATEGORY,
+  GET_ALL_PRODUCT_BY_KEYWORD,
 } from "../actions/types";
-import { loadState } from "./../localStorage";
+import { loadState } from "../localStorage";
 
 const persistedState = loadState();
 let numberCart = 0;
@@ -29,6 +32,7 @@ const initProduct = {
   _product: {},
   _productBestList: [],
   _productNewList: [],
+  _categories: [],
 };
 
 export const product = (state = initProduct, action) => {
@@ -47,6 +51,21 @@ export const product = (state = initProduct, action) => {
       return {
         ...state,
         _productNewList: action.payload,
+      };
+    case GET_ALL_CATEGORY:
+      return {
+        ...state,
+        _categories: action.payload,
+      };
+    case GET_ALL_PRODUCT_BY_CATEGORY:
+      return {
+        ...state,
+        _products: action.payload,
+      };
+    case GET_ALL_PRODUCT_BY_KEYWORD:
+      return {
+        ...state,
+        _products: action.payload,
       };
     case GET_PRODUCT_DETAIL:
       return {

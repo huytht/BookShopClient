@@ -22,7 +22,7 @@ import {
   IncreaseQuantity,
   DecreaseQuantity,
   DeleteCart,
-} from "../../actions/cart";
+} from "../../actions/product";
 import { useNavigate } from "react-router-dom";
 import callApi from "../../api";
 
@@ -110,7 +110,7 @@ const Title = styled("h1")({
             </TableRow>
           </TableHead>
           <TableBody>
-            {cartStorage.map((item, index) => (
+            {cartStorage.length > 0 && cartStorage.map((item, index) => (
               <TableRow key={index}>
                 <TableCell>{item.title}</TableCell>
                 <TableCell align="center">
