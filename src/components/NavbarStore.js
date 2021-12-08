@@ -63,10 +63,6 @@ const Center = styled("div")({
   textAlign: "center",
 });
 
-const Logo = styled("h1")({
-  fontWeight: "Bold",
-  color: "green",
-});
 
 const Right = styled("div")({
   flex: 1,
@@ -75,6 +71,10 @@ const Right = styled("div")({
   justifyContent: "flex-end",
 });
 
+const Logo = styled("h1")({
+  fontWeight: "Bold",
+  color: "green",
+});
 const MenuItemHandle = styled("div")({
   frontSize: "14px",
   display: "flex",
@@ -191,11 +191,16 @@ const NavbarStore = () => {
            <SearchBar style={{ width: 300 }} value={value} onChange={handleChange} placeholder="TÌm kiếm theo tựa sách" onRequestSearch={handleRequestSearch}/>         
           </SearchContainer>
         </Left>
+        
         <Center>
+          
           <Link style={{ textDecoration: "none" }} to="/">
-            <Logo>BOOKSTORE</Logo>
+          
+            <img width='250px' style={{paddingTop:'-10px'}}  src="/imagebanner/logo_1.png"/>
           </Link>
+          
         </Center>
+
         <Right>
           <MenuItemHandle>
             <IconButton>
@@ -212,7 +217,7 @@ const NavbarStore = () => {
 
             {!isLoggedIn ? (
               <>
-                <Button onClick={handleOpen}>Đăng nhập</Button>
+                <Button  onClick={handleOpen}>Đăng nhập</Button>
                 <Modal
                   open={open}
                   onClose={handleClose}

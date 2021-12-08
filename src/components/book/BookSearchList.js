@@ -61,7 +61,7 @@ const BookSearchList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (params.has("keyword")) {
+    if (params.has("keyword") && params.get("keyword") !== "") {
       callApi(
         `book/list-book-by-name/${params.get("keyword")}`,
         "GET",
@@ -277,6 +277,7 @@ const BookSearchList = () => {
                   count={count}
                   size="small"
                   page={page}
+                  
                   onChange={handleChange}
                 />
               </Stack>

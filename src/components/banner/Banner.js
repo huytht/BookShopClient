@@ -4,33 +4,32 @@ import { ImageList,ImageListItem } from "@material-ui/core";
 import { Link } from "react-router-dom";
 const itemData = [
     {
-      id:9,
-      img:'/imagebanner/Copy of Nature Welcome Church Template - Made with PosterMyWall.jpg',
-      title: 'Bed',
+      id:40,
+      img:'/imagebanner/SCDNL.jpg',
+     
       cols:4
     },
     {
-        id:2,
-      img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363107_05.jpg',
-      title: 'Books',
+        id:41,
+      img: '/imagebanner/LDTCKCD.jpg',
+     
       cols:2
     },
     {
-        id:3,
-      img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg',
-      title: 'Sink',
+        id:14,
+      img: '/imagebanner/AAKH.jpg',
+      
       cols:2
     },
     {
-    id:4,
-    img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363107_05.jpg',
-    title: 'Books',
+    id:42,
+    img: '/imagebanner/LQNH.jpg',
     cols:2
   },
   {
-      id:5,
-    img: 'https://www.vinabook.com/images/thumbnails/promo/802x480/363109_04.jpg',
-    title: 'Sink',
+      id:37,
+    img: '/imagebanner/NKTT.jpg',
+   
     cols:2
   }
   ,

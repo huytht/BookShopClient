@@ -174,7 +174,7 @@ const RRatingBook = ({ props }) => {
                 </Paper>
               ))}
               <Stack spacing={2}>      
-                 <Pagination count={count} size="small" page={page} onChange={handleCommentPagination} />
+                 <Pagination count={count} size="small" page={page}  onChange={handleCommentPagination} />
               </Stack>
             </div>
           </>

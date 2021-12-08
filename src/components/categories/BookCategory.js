@@ -255,6 +255,7 @@ const BookCategory = () => {
                   count={count}
                   size="small"
                   page={page}
+                  
                   onChange={handleChange}
                 />
               </Stack>
