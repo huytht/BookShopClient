@@ -4,6 +4,7 @@ import callApi from "../../api";
 
 export const Confirmation = () => {
   const user = JSON.parse(localStorage.getItem("userOrder"));
+  const carts = JSON.parse(localStorage.getItem("carts")).Carts;
   const shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
   const billingAddress = JSON.parse(localStorage.getItem("billingAddress"));
   const sameShippingAddress = JSON.parse(
@@ -41,7 +42,6 @@ export const Confirmation = () => {
     <>
       <CardHeader title="Thông tin giao hàng" />
       <Divider />
-
       <CardContent>
         <Typography variant="subtitle1">Địa chỉ giao hàng:</Typography>
         <Typography variant="subtitle2">

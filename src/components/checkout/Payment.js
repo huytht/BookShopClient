@@ -36,7 +36,7 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
   };
 
   const [townDistrict, setTownDistrict] = useState([{}]);
-  const [payment, setPayment] = useState(JSON.parse(localStorage.getItem("payment"))?.id !== null ? JSON.parse(localStorage.getItem("payment")) : initPayment);
+  const [payment, setPayment] = useState(JSON.parse(localStorage.getItem("payment")) !== null ? JSON.parse(localStorage.getItem("payment")) : initPayment);
   const [billingAddress, setBillingAddress] = useState(initShippingAddress);
 
   const handleChange = (event) => {

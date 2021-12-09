@@ -92,7 +92,7 @@ export const product = (state = initProduct, action) => {
           if (item._id === action.payload._id) {
             state.Carts[key].quantity++;
             check = true;
-          }
+          } 
         });
         if (!check) {
           let _cart = {

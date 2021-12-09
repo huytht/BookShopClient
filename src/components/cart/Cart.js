@@ -41,7 +41,7 @@ const Title = styled("h1")({
   const { user } = useSelector((state) => state.auth);
   const { numberCart, Carts } = useSelector((state) => state.product);
   const [cartStorage, setCartStorage] = useState(
-    JSON.parse(localStorage.getItem("carts")).Carts
+    JSON.parse(localStorage.getItem("carts")).Carts.length > 0 ? JSON.parse(localStorage.getItem("carts")).Carts : []
   );
   const [active, setActive] = useState([]);
   const dispatch = useDispatch();
@@ -51,8 +51,8 @@ const Title = styled("h1")({
     TotalCart += cartStorage[item].quantity * cartStorage[item].price;
   });
 
-  function TotalPrice(price, tonggia) {
-    return Number(price * tonggia).toLocaleString("vi-VN", {
+  function TotalPrice(price, quantity) {
+    return Number(price * quantity).toLocaleString("vi-VN", {
       style: "currency",
       currency: "VND",
     });
