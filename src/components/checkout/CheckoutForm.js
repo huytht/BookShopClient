@@ -19,12 +19,6 @@ import Success from "./Success";
 import { Order } from "../order/Order";
 
 const steps = ["Thông tin giao hàng", "Thông tin thanh toán", "Xác nhận"];
-const initPayment = {
-  payment_id: 1,
-  card_number: "",
-  expire_date: "",
-  security_number: ""
-}
 
 export const CheckoutForm = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -35,73 +29,76 @@ export const CheckoutForm = () => {
   const [payment, setPayment] = useState([{}]);
   const { user } = useSelector((state) => state.auth);
   const { numberCart, Carts } = useSelector((state) => state.product);
-  // place order
-  const userOrder = JSON.parse(localStorage.getItem("userOrder"));
-  // const carts = JSON.parse(localStorage.getItem("carts")).Carts;
-  const shippingAddress = JSON.parse(localStorage.getItem("shippingAddress"));
-  const billingAddress = JSON.parse(localStorage.getItem("billingAddress"));
-  const paymentOrder = JSON.parse(localStorage.getItem("payment")) !== null ? JSON.parse(localStorage.getItem("payment")) : initPayment;
-  const sameShippingAddress = JSON.parse(
-    localStorage.getItem("sameShippingAddress") === null ? false : true
-  );
 
+  // place order
   const [provinceCitySADetail, setProvinceCitySADetail] = useState({});
   const [townDistrictSADetail, setTownDistrictSADetail] = useState({});
   const [provinceCityBADetail, setProvinceCityBADetail] = useState({});
   const [townDistrictBADetail, setTownDistrictBADetail] = useState({});
+  const [userOrder, setUserOrder] = useState({});
+  const [shippingAddress, setShippingAddress] = useState({});
+  const [billingAddress, setBillingAddress] = useState({});
+  const [paymentOrder, setPaymentOrder] = useState({});
+  const [sameShippingAddress, setSameShippingAddress] = useState(false);
 
-  useEffect(() => {
-    callApi(
-      `province-city/get-province-city/${shippingAddress.province_city.toString()}`
-    ).then((res) => {
-      setProvinceCitySADetail(res.data);
-      if (sameShippingAddress === true) setProvinceCityBADetail(res.data);
-    });
-    callApi(
-      `town-district/get-town-district/${shippingAddress.town_district.toString()}`
-    ).then((res) => {
-      setTownDistrictSADetail(res.data);
-      if (sameShippingAddress === true) setTownDistrictBADetail(res.data);
-    });
-    if (sameShippingAddress === false) {
-      callApi(
-        `province-city/get-province-city/${billingAddress.province_city.toString()}`
-      ).then((res) => setProvinceCityBADetail(res.data));
-      callApi(
-        `town-district/get-town-district/${billingAddress.town_district.toString()}`
-      ).then((res) => setTownDistrictBADetail(res.data));
-    }
-  }, []);
-
-  let totalCart = 0;
-  Object.keys(Carts).forEach(function (item) {
-    totalCart += Carts[item].quantity * Carts[item].price;
-  });
   // item from inserted
   const [shippingAddressInserted, setShippingAddressInserted] = useState({});
   const [billingAddressInserted, setBillingAddressInserted] = useState({});
   const [orderInserted, setOrderInserted] = useState({});
   const [orderDetailInserted, setOrderDetailInserted] = useState([{}]);
 
-  const getBookDetailList = (id, quantity) => {
-    callApi(`book/get-list-book-detail/${id}/${quantity}`, "GET", null).then(
-      (res) => setListBookDetail(res.data)
-    );
-  };
+  useEffect(() => {
+    if (activeStep === 2) {
+      setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
+      // const carts = JSON.parse(localStorage.getItem("carts")).Carts;
+      setShippingAddress(JSON.parse(localStorage.getItem("shippingAddress")));
+      setBillingAddress(JSON.parse(localStorage.getItem("billingAddress")));
+      setPaymentOrder(JSON.parse(localStorage.getItem("payment")));
+      setSameShippingAddress(
+        JSON.parse(localStorage.getItem("sameShippingAddress"))
+      );
+    }
+  }, [activeStep]);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  useEffect(() => {
+    if (activeStep === 2) {
+      callApi(
+        `province-city/get-province-city/${shippingAddress.province_city.toString()}`
+      ).then((res) => {
+        setProvinceCitySADetail(res.data);
+        if (sameShippingAddress === true) setProvinceCityBADetail(res.data);
+      });
+      callApi(
+        `town-district/get-town-district/${shippingAddress.town_district.toString()}`
+      ).then((res) => {
+        setTownDistrictSADetail(res.data);
+        if (sameShippingAddress === true) setTownDistrictBADetail(res.data);
+      });
+      if (sameShippingAddress === false) {
+        callApi(
+          `province-city/get-province-city/${billingAddress.province_city.toString()}`
+        ).then((res) => setProvinceCityBADetail(res.data));
+        callApi(
+          `town-district/get-town-district/${billingAddress.town_district.toString()}`
+        ).then((res) => setTownDistrictBADetail(res.data));
+      }
+    }
+  }, [shippingAddress]);
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
+  let totalCart = 0;
+  Object.keys(Carts).forEach(function (item) {
+    totalCart += Carts[item].quantity * Carts[item].price;
+  });
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const getBookDetailList = (id, quantity) => {
+  //   callApi(`book/get-list-book-detail/${id}/${quantity}`, "GET", null).then(
+  //     (res) => setListBookDetail(res.data)
+  //   );
+  // };
 
   const handleCreateAddress = () => {
+    console.log(provinceCitySADetail);
+    console.log(townDistrictSADetail);
     callApi("address/create-address/", "POST", {
       province_city: provinceCitySADetail.name,
       town_district: townDistrictSADetail.name_with_type,
@@ -134,19 +131,23 @@ export const CheckoutForm = () => {
       total_quantity: parseInt(numberCart),
     }).then((res) => setOrderInserted(res.data));
   };
-
   const handleCreateOrderDetail = () => {
     Carts.map((book) => {
-      getBookDetailList(book._id, book.quantity);
-      listBookDetail.map((bookDetailId) => {
-        callApi("order-detail/create-order-detail/", "POST", {
-          price: book.price,
-          order_id: orderInserted._id,
-          book_detail_id: bookDetailId,
-        }).then((res) =>
-          setOrderDetailInserted(...orderDetailInserted, res.data)
-        );
-      });
+      // getBookDetailList(book._id, book.quantity);
+      callApi(`book/get-list-book-detail/${book._id}/${book.quantity}`, "GET", null).then(
+        (res) => {
+          res.data.map((bookDetailId) => {
+            callApi("order-detail/create-order-detail/", "POST", {
+              price: book.price,
+              order_id: orderInserted._id,
+              book_detail_id: bookDetailId,
+            }).then((response) =>
+              setOrderDetailInserted(...orderDetailInserted, response.data)
+            );
+          });
+        }
+      );
+      
     });
     if (
       JSON.stringify(orderInserted) !== "{}" &&
@@ -156,18 +157,30 @@ export const CheckoutForm = () => {
     }
   };
 
+  const handlePlaceOrder = () => {
+    handleCreateAddress();
+  };
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+
   useEffect(() => {
-    console.log(shippingAddressInserted)
+    console.log(shippingAddressInserted);
     if (JSON.stringify(shippingAddressInserted) !== "{}") handleCreateOrder();
   }, [shippingAddressInserted]);
 
   useEffect(() => {
     if (JSON.stringify(orderInserted) !== "{}") handleCreateOrderDetail();
   }, [orderInserted]);
-
-  const handlePlaceOrder = () => {
-    handleCreateAddress();
-  };
 
   useEffect(() => {
     callApi(`province-city`, "GET", null).then((res) =>
@@ -186,18 +199,9 @@ export const CheckoutForm = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      callApi(`user/get-user/${user.id}`, "GET", null).then((res) =>
-        setUserInfo(res.data)
-      );
-    }
-
-    EventBus.on("logout", () => {
-      this.logOut();
-    });
-    return () => {
-      EventBus.remove("logout");
-    };
+    callApi(`user/get-user/${user.id}`, "GET", null).then((res) =>
+      setUserInfo(res.data)
+    );
   }, [user]);
 
   const handleChangeStep = (activeStep) => {

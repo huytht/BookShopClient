@@ -42,11 +42,13 @@ export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
   }
   const params = new URL(document.location).pathname;
   useEffect(() => {
-    //  localStorage.removeItem("carts");
-     localStorage.removeItem("billingAddress");
-     localStorage.removeItem("payment");
-    //  dispatch(DeleteAllCart());
-  }, [params, dispatch])
+    if (!params.includes("checkout")) {
+      localStorage.removeItem("carts");
+      localStorage.removeItem("billingAddress");
+      localStorage.removeItem("payment");
+      dispatch(DeleteAllCart());
+    }
+  }, [params]);
 
   useEffect(() => {
     callApi(`address/get-address/${shippingAddress}`).then((res) => {
@@ -142,17 +144,25 @@ export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
                   <TableHead>
                     <TableRow>
                       <TableCell width="40%">Tên sách</TableCell>
-                      <TableCell width="20%" align="right">Số lượng</TableCell>
-                      <TableCell width="20%" align="right">Giá tiền</TableCell>
-                      <TableCell width="20%" align="right">Tổng cộng</TableCell>
+                      <TableCell width="20%" align="right">
+                        Số lượng
+                      </TableCell>
+                      <TableCell width="20%" align="right">
+                        Giá tiền
+                      </TableCell>
+                      <TableCell width="20%" align="right">
+                        Tổng cộng
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {orderItems.map((item) => (
                       <TableRow>
                         <TableCell width="40%">{item.title}</TableCell>
-                        <TableCell width="20%" align="right">{item.quantity}</TableCell>
-                        <TableCell width="20%"  align="right">
+                        <TableCell width="20%" align="right">
+                          {item.quantity}
+                        </TableCell>
+                        <TableCell width="20%" align="right">
                           {item.price.toLocaleString("vi-VN", {
                             style: "currency",
                             currency: "VND",
