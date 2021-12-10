@@ -219,7 +219,7 @@ const NavbarStore = () => {
         <Right>
           <MenuItemHandle>
             <IconButton>
-              <Link to="/cart">
+              <Link onClick={handleChangePage} to="/cart">
                 <Badge
                   badgeContent={numberCart}
                   color="primary"
