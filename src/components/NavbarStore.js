@@ -8,7 +8,7 @@ import {
   Divider,
   IconButton,
 } from "@material-ui/core";
-import { Search, ShoppingCartOutlined } from "@material-ui/icons";
+import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "@mui/material/Modal";
@@ -182,10 +182,14 @@ const NavbarStore = () => {
   const params = new URL(document.location).pathname;
 
   const handleChangePage = () => {
-    if (params.includes("checkout")) {
+    if (params.includes("checkout") && JSON.parse(localStorage.getItem("ordered")) === true) {
+      localStorage.removeItem("sameShippingAddress");
+      localStorage.removeItem("shippingAddress");
+      localStorage.removeItem("userOrder");
       localStorage.removeItem("carts");
       localStorage.removeItem("billingAddress");
       localStorage.removeItem("payment");
+      localStorage.removeItem("ordered");
       dispatch(DeleteAllCart());
     }
   }
@@ -206,7 +210,7 @@ const NavbarStore = () => {
         
         <Center>
           
-          <Link style={{ textDecoration: "none" }} to="/">
+          <Link onClick={handleChangePage} style={{ textDecoration: "none" }} to="/">
             <img alt="" width='250px' style={{paddingTop:'-10px'}}  src="/imagebanner/logo_1.png"/>
           </Link>
           
@@ -320,7 +324,7 @@ const NavbarStore = () => {
                               <Link
                                 style={{ textDecoration: "none" }}
                                 onClick={handleCloseSetting}
-                                to="/order"
+                                to="/order-list"
                               >
                                 <ListItemText
                                   primary="Thông tin đơn hàng"

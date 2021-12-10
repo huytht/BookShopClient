@@ -46,6 +46,7 @@ export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
     callApi(`address/get-address/${shippingAddress}`).then((res) => {
       setShippingAddresDetail(res.data);
     });
+    localStorage.setItem("ordered", true);
   }, []);
 
   return (
@@ -61,8 +62,8 @@ export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
           </Button>
         </div>
       </div>
-      <div className="page-container hidden-on-narrow">
-        <PDFExport ref={pdfExportComponent}>
+      <div style={{ height: '100%' }} className="page-container hidden-on-narrow">
+        <PDFExport paperSize="A4" ref={pdfExportComponent}>
           <div className={`pdf-page ${layoutSelection.value}`}>
             <div className="inner-page">
               <div

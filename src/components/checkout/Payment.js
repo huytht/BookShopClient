@@ -58,6 +58,10 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
   }, [payment]);
 
   useEffect(() => {
+    localStorage.setItem("sameShippingAddress", sameShippingAddress);
+  }, [])
+
+  useEffect(() => {
     if (sameShippingAddress) {
       setBillingAddress(JSON.parse(localStorage.getItem("shippingAddress")));
     } else {

@@ -27,7 +27,7 @@ export const CheckoutForm = () => {
   const [payment, setPayment] = useState([{}]);
   const { user } = useSelector((state) => state.auth);
   const { numberCart, Carts } = useSelector((state) => state.product);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,16 +59,11 @@ export const CheckoutForm = () => {
   useEffect(() => {
     if (activeStep === 2) {
       setUserOrder(JSON.parse(localStorage.getItem("userOrder")));
-      // const carts = JSON.parse(localStorage.getItem("carts")).Carts;
       setShippingAddress(JSON.parse(localStorage.getItem("shippingAddress")));
       setBillingAddress(JSON.parse(localStorage.getItem("billingAddress")));
       setPaymentOrder(JSON.parse(localStorage.getItem("payment")));
-      setSameShippingAddress(
-        JSON.parse(localStorage.getItem("sameShippingAddress"))
-      );
-    } else if (activeStep === 3) {
-      setOpen(true)
-    }
+      setSameShippingAddress(JSON.parse(localStorage.getItem("sameShippingAddress")));
+    } 
   }, [activeStep]);
 
   useEffect(() => {
@@ -102,36 +97,40 @@ export const CheckoutForm = () => {
   });
 
   const handleCreateAddress = () => {
-    callApi("address/create-address/", "POST", {
-      province_city: provinceCitySADetail.name,
-      town_district: townDistrictSADetail.name_with_type,
-      street: shippingAddress.street,
-      zip_code: shippingAddress.zip_code,
-    }).then((res) => setShippingAddressInserted(res.data));
-    if (sameShippingAddress === false) {
+    if (JSON.stringify(shippingAddressInserted) === "{}") {
       callApi("address/create-address/", "POST", {
-        province_city: provinceCityBADetail.name,
-        town_district: townDistrictBADetail.name_with_type,
-        street: billingAddress.street,
-        zip_code: billingAddress.zip_code,
-      }).then((res) => setBillingAddressInserted(res.data));
+        province_city: provinceCitySADetail.name,
+        town_district: townDistrictSADetail.name_with_type,
+        street: shippingAddress.street,
+        zip_code: shippingAddress.zip_code,
+      }).then((res) => setShippingAddressInserted(res.data));
+      if (sameShippingAddress === false) {
+        callApi("address/create-address/", "POST", {
+          province_city: provinceCityBADetail.name,
+          town_district: townDistrictBADetail.name_with_type,
+          street: billingAddress.street,
+          zip_code: billingAddress.zip_code,
+        }).then((res) => setBillingAddressInserted(res.data));
+      }
     }
   };
 
   const handleCreateOrder = () => {
-    callApi("order/create-order/", "POST", {
-      user_id: user.id,
-      total_money: parseInt(totalCart),
-      payment_id: paymentOrder.payment_id,
-      created_date: Math.floor(new Date().getTime() / 1000),
-      billing_address_id:
-        billingAddressInserted.town_district === undefined
-          ? shippingAddressInserted._id
-          : billingAddressInserted._id,
-      shipping_address_id: shippingAddressInserted._id,
-      status: "Complete",
-      total_quantity: parseInt(numberCart),
-    }).then((res) => setOrderInserted(res.data));
+    if (JSON.stringify(orderInserted) === "{}") {
+      callApi("order/create-order/", "POST", {
+        user_id: user.id,
+        total_money: parseInt(totalCart),
+        payment_id: paymentOrder.payment_id,
+        created_date: Math.floor(new Date().getTime() / 1000),
+        billing_address_id:
+          billingAddressInserted.town_district === undefined
+            ? shippingAddressInserted._id
+            : billingAddressInserted._id,
+        shipping_address_id: shippingAddressInserted._id,
+        status: "Complete",
+        total_quantity: parseInt(numberCart),
+      }).then((res) => setOrderInserted(res.data));
+    }
   };
   const handleCreateOrderDetail = () => {
     Carts.map((book) => {
@@ -156,6 +155,7 @@ export const CheckoutForm = () => {
       JSON.stringify(orderDetailInserted) !== "{}"
     ) {
       handleNext();
+      setOpen(true);
     }
   };
 
