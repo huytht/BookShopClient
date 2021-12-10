@@ -114,7 +114,7 @@ export const ShippingAddress = ({
               onChange={handleChange}
               value={values?.date_of_birth}
               label="Date of birth"
-              name="date"
+              name="date_of_birth"
               type="date"
             />
           </Grid>
