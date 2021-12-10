@@ -10,25 +10,34 @@ import {
   Step,
   StepLabel,
   Button,
-  Typography,
+  Dialog,
 } from "@mui/material";
 import callApi from "../../api";
-import EventBus from "../../common/EventBus";
 import { useSelector } from "react-redux";
-import Success from "./Success";
 import { Order } from "../order/Order";
+import Alert from "@mui/material/Alert";
 
 const steps = ["Thông tin giao hàng", "Thông tin thanh toán", "Xác nhận"];
 
 export const CheckoutForm = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [listBookDetail, setListBookDetail] = useState([]);
   const [userInfo, setUserInfo] = useState({});
   const [provinceCity, setProvinceCity] = useState([{}]);
   const [townDistrict, setTownDistrict] = useState([{}]);
   const [payment, setPayment] = useState([{}]);
   const { user } = useSelector((state) => state.auth);
   const { numberCart, Carts } = useSelector((state) => state.product);
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOpen(false);
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   // place order
   const [provinceCitySADetail, setProvinceCitySADetail] = useState({});
@@ -57,7 +66,8 @@ export const CheckoutForm = () => {
       setSameShippingAddress(
         JSON.parse(localStorage.getItem("sameShippingAddress"))
       );
-    }
+   
+    } 
   }, [activeStep]);
 
   useEffect(() => {
@@ -90,15 +100,7 @@ export const CheckoutForm = () => {
     totalCart += Carts[item].quantity * Carts[item].price;
   });
 
-  // const getBookDetailList = (id, quantity) => {
-  //   callApi(`book/get-list-book-detail/${id}/${quantity}`, "GET", null).then(
-  //     (res) => setListBookDetail(res.data)
-  //   );
-  // };
-
   const handleCreateAddress = () => {
-    console.log(provinceCitySADetail);
-    console.log(townDistrictSADetail);
     callApi("address/create-address/", "POST", {
       province_city: provinceCitySADetail.name,
       town_district: townDistrictSADetail.name_with_type,
@@ -116,14 +118,13 @@ export const CheckoutForm = () => {
   };
 
   const handleCreateOrder = () => {
-    console.log(shippingAddressInserted);
     callApi("order/create-order/", "POST", {
       user_id: user.id,
       total_money: parseInt(totalCart),
       payment_id: paymentOrder.payment_id,
       created_date: Math.floor(new Date().getTime() / 1000),
       billing_address_id:
-        JSON.stringify(billingAddressInserted) === "{}"
+        billingAddressInserted.town_district === undefined
           ? shippingAddressInserted._id
           : billingAddressInserted._id,
       shipping_address_id: shippingAddressInserted._id,
@@ -133,21 +134,21 @@ export const CheckoutForm = () => {
   };
   const handleCreateOrderDetail = () => {
     Carts.map((book) => {
-      // getBookDetailList(book._id, book.quantity);
-      callApi(`book/get-list-book-detail/${book._id}/${book.quantity}`, "GET", null).then(
-        (res) => {
-          res.data.map((bookDetailId) => {
-            callApi("order-detail/create-order-detail/", "POST", {
-              price: book.price,
-              order_id: orderInserted._id,
-              book_detail_id: bookDetailId,
-            }).then((response) =>
-              setOrderDetailInserted(...orderDetailInserted, response.data)
-            );
-          });
-        }
-      );
-      
+      callApi(
+        `book/get-list-book-detail/${book._id}/${book.quantity}`,
+        "GET",
+        null
+      ).then((res) => {
+        res.data.map((bookDetailId) => {
+          callApi("order-detail/create-order-detail/", "POST", {
+            price: book.price,
+            order_id: orderInserted._id,
+            book_detail_id: bookDetailId,
+          }).then((response) =>
+            setOrderDetailInserted(...orderDetailInserted, response.data)
+          );
+        });
+      });
     });
     if (
       JSON.stringify(orderInserted) !== "{}" &&
@@ -174,11 +175,12 @@ export const CheckoutForm = () => {
   };
 
   useEffect(() => {
-    console.log(shippingAddressInserted);
-    if (JSON.stringify(shippingAddressInserted) !== "{}") handleCreateOrder();
+    if (shippingAddressInserted.town_district !== undefined)
+      handleCreateOrder();
   }, [shippingAddressInserted]);
 
   useEffect(() => {
+    console.log(orderInserted._id)
     if (JSON.stringify(orderInserted) !== "{}") handleCreateOrderDetail();
   }, [orderInserted]);
 
@@ -239,56 +241,71 @@ export const CheckoutForm = () => {
   };
 
   return (
-    <Box m="auto" sx={{ width: "80%", height: "100%", mt: "30px" }}>
-      <Stepper sx={{ mb: "20px" }} activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <Card>
-        <Fragment>
-          {handleChangeStep(activeStep)}
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 2 }}>
-            {activeStep !== 3 && (
-              <>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ ml: 2 }}
-                  variant="outlined"
-                >
-                  Quay lại
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                {activeStep === steps.length - 1 ? (
+    <>
+      <Box m="auto" sx={{ width: "80%", height: "100%", mt: "30px" }}>
+        <Stepper sx={{ mb: "20px" }} activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <Card>
+          <Fragment>
+            {handleChangeStep(activeStep)}
+            <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 2 }}>
+              {activeStep !== 3 && (
+                <>
                   <Button
-                    onClick={handlePlaceOrder}
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ ml: 2 }}
                     variant="outlined"
-                    sx={{ mr: 2 }}
                   >
-                    Đặt hàng
+                    Quay lại
                   </Button>
-                ) : (
-                  <Button
-                    onClick={handleNext}
-                    variant="outlined"
-                    sx={{ mr: 2 }}
-                  >
-                    Tiếp theo
-                  </Button>
-                )}
-              </>
-            )}
-          </Box>
-        </Fragment>
-      </Card>
-    </Box>
+                  <Box sx={{ flex: "1 1 auto" }} />
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      onClick={handlePlaceOrder}
+                      variant="outlined"
+                      sx={{ mr: 2 }}
+                    >
+                      Đặt hàng
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={handleNext}
+                      variant="outlined"
+                      sx={{ mr: 2 }}
+                    >
+                      Tiếp theo
+                    </Button>
+                  )}
+                </>
+              )}
+            </Box>
+          </Fragment>
+        </Card>
+      </Box>
+      {activeStep === 3 && (
+        <Dialog
+          open={open}
+          // onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableBackdropClick
+        >
+          <Alert variant="filled" severity="success">
+            Đặt hàng thành công
+          </Alert>
+        </Dialog>
+      )}
+    </>
   );
 };

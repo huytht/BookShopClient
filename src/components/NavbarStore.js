@@ -30,6 +30,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import SearchBar from "material-ui-search-bar";
+import { DeleteAllCart } from "../actions/product";
 
 const Container = styled("div")({
   height: 75,
@@ -178,6 +179,17 @@ const NavbarStore = () => {
     navigate("/");
   };
 
+  const params = new URL(document.location).pathname;
+
+  const handleChangePage = () => {
+    if (params.includes("checkout")) {
+      localStorage.removeItem("carts");
+      localStorage.removeItem("billingAddress");
+      localStorage.removeItem("payment");
+      dispatch(DeleteAllCart());
+    }
+  }
+
   useEffect(() => {
     if (isLoggedIn) setOpen(false);
   }, [isLoggedIn]);
@@ -195,8 +207,7 @@ const NavbarStore = () => {
         <Center>
           
           <Link style={{ textDecoration: "none" }} to="/">
-          
-            <img width='250px' style={{paddingTop:'-10px'}}  src="/imagebanner/logo_1.png"/>
+            <img alt="" width='250px' style={{paddingTop:'-10px'}}  src="/imagebanner/logo_1.png"/>
           </Link>
           
         </Center>
@@ -217,7 +228,7 @@ const NavbarStore = () => {
 
             {!isLoggedIn ? (
               <>
-                <Button  onClick={handleOpen}>Đăng nhập</Button>
+                <Button onClick={handleOpen}>Đăng nhập</Button>
                 <Modal
                   open={open}
                   onClose={handleClose}

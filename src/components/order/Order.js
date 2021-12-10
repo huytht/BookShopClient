@@ -23,7 +23,7 @@ import { DeleteAllCart } from "../../actions/product";
 
 export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
   const pdfExportComponent = useRef(null);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [shippingAddressDetail, setShippingAddresDetail] = useState({});
   const [layoutSelection, setLayoutSelection] = useState({
     text: "A4",
@@ -40,15 +40,7 @@ export const Order = ({ order, orderItems, shippingAddress, userOrder }) => {
       currency: "VND",
     });
   }
-  const params = new URL(document.location).pathname;
-  useEffect(() => {
-    if (!params.includes("checkout")) {
-      localStorage.removeItem("carts");
-      localStorage.removeItem("billingAddress");
-      localStorage.removeItem("payment");
-      dispatch(DeleteAllCart());
-    }
-  }, [params]);
+  
 
   useEffect(() => {
     callApi(`address/get-address/${shippingAddress}`).then((res) => {

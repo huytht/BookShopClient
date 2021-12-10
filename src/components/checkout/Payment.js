@@ -103,7 +103,7 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
               label="Tỉnh/thành"
               onChange={handleChange}
               select
-              value={billingAddress.province_city}
+              value={billingAddress?.province_city}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {provinceCityList.map((option) => (
@@ -121,7 +121,7 @@ export const Payment = ({ provinceCityList, townDistrictList, paymentList }) => 
               label="Quận/huyện"
               onChange={handleChange}
               select
-              value={billingAddress.town_district}
+              value={billingAddress?.town_district}
               MenuProps={{ PaperProps: { sx: { maxHeight: 200 } } }}
             >
               {townDistrict.map((option) => (
