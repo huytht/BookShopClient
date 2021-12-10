@@ -66,8 +66,9 @@ export const CheckoutForm = () => {
       setSameShippingAddress(
         JSON.parse(localStorage.getItem("sameShippingAddress"))
       );
-   
-    } 
+    } else if (activeStep === 3) {
+      setOpen(true)
+    }
   }, [activeStep]);
 
   useEffect(() => {
@@ -180,7 +181,6 @@ export const CheckoutForm = () => {
   }, [shippingAddressInserted]);
 
   useEffect(() => {
-    console.log(orderInserted._id)
     if (JSON.stringify(orderInserted) !== "{}") handleCreateOrderDetail();
   }, [orderInserted]);
 
@@ -293,8 +293,7 @@ export const CheckoutForm = () => {
           </Fragment>
         </Card>
       </Box>
-      {activeStep === 3 && (
-        <Dialog
+      <Dialog
           open={open}
           // onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
@@ -305,7 +304,6 @@ export const CheckoutForm = () => {
             Đặt hàng thành công
           </Alert>
         </Dialog>
-      )}
     </>
   );
 };
