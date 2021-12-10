@@ -12,6 +12,7 @@ import {
   GET_ALL_CATEGORY,
   GET_ALL_PRODUCT_BY_CATEGORY,
   GET_ALL_PRODUCT_BY_KEYWORD,
+  GET_ORDER_LIST,
 } from "../actions/types";
 import { loadState } from "../localStorage";
 
@@ -33,6 +34,7 @@ const initProduct = {
   _productBestList: [],
   _productNewList: [],
   _categories: [],
+  _orderList: [],
 };
 
 export const product = (state = initProduct, action) => {
@@ -51,6 +53,11 @@ export const product = (state = initProduct, action) => {
       return {
         ...state,
         _productNewList: action.payload,
+      };
+    case GET_ORDER_LIST:
+      return {
+        ...state,
+        _orderList: action.payload,
       };
     case GET_ALL_CATEGORY:
       return {
@@ -92,7 +99,7 @@ export const product = (state = initProduct, action) => {
           if (item._id === action.payload._id) {
             state.Carts[key].quantity++;
             check = true;
-          } 
+          }
         });
         if (!check) {
           let _cart = {

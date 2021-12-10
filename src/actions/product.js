@@ -6,6 +6,13 @@ export function GetAllCategory(payload){
     }
 }
 
+export function GetOrderList(payload){
+    return{
+        type:'GET_ORDER_LIST',
+        payload
+    }
+}
+
 export function GetAllProductByKeyword(payload){
     return{
         type:'GET_ALL_PRODUCT_BY_KEYWORD',

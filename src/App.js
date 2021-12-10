@@ -9,7 +9,7 @@ import { UserProfile } from './pages/UserProfile';
 import { CheckoutForm } from "./components/checkout/CheckoutForm";
 import BookCategory from "./components/categories/BookCategory";
 import BookSearchList from "./components/book/BookSearchList";
-import OrderDetail from "./components/order/OrderDetail";
+import OrderList from "./components/order/OrderList";
 const App = () => {
   return (
     <Router>
@@ -24,7 +24,7 @@ const App = () => {
           <Route path="/checkout" exact element={<CheckoutForm />} />
           <Route path="/bookcate" exact element={<BookCategory />} />
           <Route path="/search" exact element={<BookSearchList/>} />
-          <Route path="/order" exact element={<OrderDetail />} />
+          <Route path="/order-list" exact element={<OrderList />} />
         </Routes>
         <Footer/>
       </div>
