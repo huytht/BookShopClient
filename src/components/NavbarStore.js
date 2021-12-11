@@ -7,6 +7,7 @@ import {
   Paper,
   Divider,
   IconButton,
+  Dialog,
 } from "@material-ui/core";
 import { ShoppingCartOutlined } from "@material-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
@@ -28,9 +29,10 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import SearchBar from "material-ui-search-bar";
 import { DeleteAllCart } from "../actions/product";
+import { Alert } from "@mui/material";
 
 const Container = styled("div")({
   height: 75,
@@ -64,7 +66,6 @@ const Center = styled("div")({
   textAlign: "center",
 });
 
-
 const Right = styled("div")({
   flex: 1,
   display: "flex",
@@ -95,7 +96,6 @@ const style = {
 };
 
 const NavbarStore = () => {
-  
   const { numberCart } = useSelector((state) => state.product);
   const { isLoggedIn, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -103,13 +103,17 @@ const NavbarStore = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [userInfo, setUserInfo] = useState({});
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const [openRegisterForm, setOpenRegisterForm] = useState(false);
   const handleOpenRegisterForm = () => setOpenRegisterForm(true);
-  const handleCloseRegisterForm = () => setOpenRegisterForm(false);
+  const handleCloseRegisterForm = () => {
+    if (JSON.parse(localStorage.getItem("registered")) === true)
+      localStorage.removeItem("registered");
+    setOpenRegisterForm(false);
+  };
 
   const [openSetting, setOpenSetting] = useState(false);
   const anchorRef = useRef(null);
@@ -137,11 +141,11 @@ const NavbarStore = () => {
 
   const handleChange = (keyword) => {
     setValue(keyword);
-  }
+  };
 
   const handleRequestSearch = () => {
     navigate(`/search?keyword=${value}`);
-  }
+  };
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = useRef(openSetting);
@@ -153,9 +157,22 @@ const NavbarStore = () => {
     prevOpen.current = openSetting;
   }, [openSetting]);
 
-  history.listen((location) => {
-    dispatch(clearMessage()); // clear message when changing location
-  });
+  // history.listen((location) => {
+  //   dispatch(clearMessage()); // clear message when changing location
+  // });
+
+  const [openSuccess, setOpenSuccess] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (openSuccess === true)
+        setOpenSuccess(false);
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -174,6 +191,17 @@ const NavbarStore = () => {
     };
   }, [user]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (JSON.parse(localStorage.getItem("registered")) === true) {
+        handleCloseRegisterForm();
+        setOpenSuccess(true);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const logOut = () => {
     dispatch(logout());
     navigate("/");
@@ -182,7 +210,10 @@ const NavbarStore = () => {
   const params = new URL(document.location).pathname;
 
   const handleChangePage = () => {
-    if (params.includes("checkout") && JSON.parse(localStorage.getItem("ordered")) === true) {
+    if (
+      params.includes("checkout") &&
+      JSON.parse(localStorage.getItem("ordered")) === true
+    ) {
       localStorage.removeItem("sameShippingAddress");
       localStorage.removeItem("shippingAddress");
       localStorage.removeItem("userOrder");
@@ -192,28 +223,50 @@ const NavbarStore = () => {
       localStorage.removeItem("ordered");
       dispatch(DeleteAllCart());
     }
-  }
+  };
 
   useEffect(() => {
     if (isLoggedIn) setOpen(false);
   }, [isLoggedIn]);
 
   return (
-    
     <Container>
+      <Dialog
+        open={openSuccess}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        disableBackdropClick
+      >
+        <Alert variant="filled" severity="success">
+          Đăng kí thành công
+        </Alert>
+      </Dialog>
       <Wrapper>
         <Left>
           <SearchContainer>
-           <SearchBar style={{ width: 300 }} value={value} onChange={handleChange} placeholder="TÌm kiếm theo tựa sách" onRequestSearch={handleRequestSearch}/>         
+            <SearchBar
+              style={{ width: 300 }}
+              value={value}
+              onChange={handleChange}
+              placeholder="TÌm kiếm theo tựa sách"
+              onRequestSearch={handleRequestSearch}
+            />
           </SearchContainer>
         </Left>
-        
+
         <Center>
-          
-          <Link onClick={handleChangePage} style={{ textDecoration: "none" }} to="/">
-            <img alt="" width='250px' style={{paddingTop:'-10px'}}  src="/imagebanner/logo_1.png"/>
+          <Link
+            onClick={handleChangePage}
+            style={{ textDecoration: "none" }}
+            to="/"
+          >
+            <img
+              alt=""
+              width="250px"
+              style={{ paddingTop: "-10px" }}
+              src="/imagebanner/logo_1.png"
+            />
           </Link>
-          
         </Center>
 
         <Right>
@@ -316,10 +369,10 @@ const NavbarStore = () => {
                                 />
                               </Link>
                             </ListItem>
-                            
+
                             <ListItem>
                               <ListItemAvatar>
-                               <DescriptionOutlinedIcon/>
+                                <DescriptionOutlinedIcon />
                               </ListItemAvatar>
                               <Link
                                 style={{ textDecoration: "none" }}

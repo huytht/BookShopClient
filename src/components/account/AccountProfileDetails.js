@@ -115,23 +115,6 @@ const AccountProfileDetails = ({ props }) => {
             <Grid item md={6} xs={12}>
               <label
                 style={{ fontWeight: "bold", marginBottom: "10px" }}
-                htmlFor="password"
-              >
-                Mật khẩu
-              </label>
-              <TextField
-                fullWidth
-                name="password"
-                type="password"
-                onChange={handleChange}
-                required
-                value={values.password}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <label
-                style={{ fontWeight: "bold", marginBottom: "10px" }}
                 htmlFor="phone"
               >
                 Số điện thoại

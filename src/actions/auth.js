@@ -9,62 +9,30 @@ import {
 
 import AuthService from "../services/auth";
 
-export const register = (username, email, password) => (dispatch) => {
-  return AuthService.register(username, email, password).then(
+export const register = (userRegister) => (dispatch) => {
+  return AuthService.register(userRegister).then(
     (response) => {
-      dispatch({
-        type: REGISTER_SUCCESS,
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: response.data.message,
-      });
-
-      return Promise.resolve();
-    },
-    (error) => {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-
-      dispatch({
-        type: REGISTER_FAIL,
-      });
-
-      dispatch({
-        type: SET_MESSAGE,
-        payload: message,
-      });
-
-      return Promise.reject();
-    }
-  );
-};
-
-export const login = (username, password) => (dispatch) => {
-  return AuthService.login(username, password).then(
-    (data) => {
-      if (data.success === true) {
+      if (response.status === 201) {
         dispatch({
-          type: LOGIN_SUCCESS,
-          payload: { user: data },
+          type: REGISTER_SUCCESS,
+        });
+
+        dispatch({
+          type: SET_MESSAGE,
+          payload: response.data.message,
         });
 
         return Promise.resolve();
       } else {
         const message =
-          (data.response &&
-            data.response.data &&
-            data.response.data.message) ||
-            data.message ||
-            data.toString();
+          (response &&
+            response.data &&
+            response.data.message) ||
+          response.message ||
+          response.toString();
 
         dispatch({
-          type: LOGIN_FAIL,
+          type: REGISTER_FAIL,
         });
 
         dispatch({
@@ -76,6 +44,35 @@ export const login = (username, password) => (dispatch) => {
       }
     }
   );
+};
+
+export const login = (username, password) => (dispatch) => {
+  return AuthService.login(username, password).then((data) => {
+    if (data.success === true) {
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: { user: data },
+      });
+
+      return Promise.resolve();
+    } else {
+      const message =
+        (data.response && data.response.data && data.response.data.message) ||
+        data.message ||
+        data.toString();
+
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+
+      dispatch({
+        type: SET_MESSAGE,
+        payload: message,
+      });
+
+      return Promise.reject();
+    }
+  });
 };
 
 export const logout = () => (dispatch) => {

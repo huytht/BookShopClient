@@ -32,6 +32,7 @@ export const CheckoutForm = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setOpen(false);
+  
     }, 3000);
 
     return () => {
@@ -133,23 +134,25 @@ export const CheckoutForm = () => {
     }
   };
   const handleCreateOrderDetail = () => {
-    Carts.map((book) => {
-      callApi(
-        `book/get-list-book-detail/${book._id}/${book.quantity}`,
-        "GET",
-        null
-      ).then((res) => {
-        res.data.map((bookDetailId) => {
-          callApi("order-detail/create-order-detail/", "POST", {
-            price: book.price,
-            order_id: orderInserted._id,
-            book_detail_id: bookDetailId,
-          }).then((response) =>
-            setOrderDetailInserted(...orderDetailInserted, response.data)
-          );
+    if (JSON.stringify(orderDetailInserted) === "[{}]") {
+      Carts.map((book) => {
+        callApi(
+          `book/get-list-book-detail/${book._id}/${book.quantity}`,
+          "GET",
+          null
+        ).then((res) => {
+          res.data.map((bookDetailId) => {
+            callApi("order-detail/create-order-detail/", "POST", {
+              price: book.price,
+              order_id: orderInserted._id,
+              book_detail_id: bookDetailId,
+            }).then((response) =>
+              setOrderDetailInserted(...orderDetailInserted, response.data)
+            );
+          });
         });
       });
-    });
+    }
     if (
       JSON.stringify(orderInserted) !== "{}" &&
       JSON.stringify(orderDetailInserted) !== "{}"

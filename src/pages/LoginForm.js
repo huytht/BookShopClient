@@ -140,13 +140,6 @@ export const LoginForm = () => {
           name="checkBtn"
         />
       </Form>
-      <Typography>
-        <Link href="#">Quên mật khẩu?</Link>
-      </Typography>
-      {/* <Typography>
-        {" "}
-        Bạn không có tài khoản? <Link href="#">Đăng ký</Link>
-      </Typography> */}
     </Grid>
   );
 };
