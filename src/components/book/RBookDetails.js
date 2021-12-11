@@ -5,7 +5,7 @@ import { styled } from '@material-ui/core';
 const Title = styled('h1')(
     {
         marginLeft: '10px',
-        color: 'green'
+        color: 'rgba(86, 141, 229, 1)'
     }
 )
 const DESC = styled('div')(

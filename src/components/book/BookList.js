@@ -25,7 +25,7 @@ const Title = styled("h1")({
   paddingLeft: "10px",
   margin: "20px",
   marginLeft: "40px",
-  color: "green",
+  color: "rgba(86, 141, 229, 1)",
   width: "auto",
   display: "flex",
   flex: 1,
@@ -58,13 +58,13 @@ const BookList = () => {
       <Wrapper>
         <Title>Sách Hay</Title>
         <ViewMore>
-          <Link to="/bookcate?id=1">
+          <Link style={{textDecoration:'none'}} to="/bookcate?id=1">
             <Button
               sx={{
-                background: "green",
+                background: "rgba(86, 141, 229, 1)",
                 color: "white",
                 "&:hover": {
-                  background: "green",
+                  background: "rgba(86, 141, 229, 1)",
                 },
               }}
             >
@@ -177,13 +177,13 @@ const BookList = () => {
         </Grid>
         <Title>Sách Mới Cập Nhật</Title>
         <ViewMore>
-          <Link to="/bookcate?id=16">
+          <Link style={{textDecoration:'none'}} to="/bookcate?id=16">
             <Button
               sx={{
-                background: "green",
+                background: "rgba(86, 141, 229, 1)",
                 color: "white",
                 "&:hover": {
-                  background: "green",
+                  background: "rgba(86, 141, 229, 1)",
                 },
               }}
             >

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Container = styled('div')(
   {
     display: 'flex',
-    borderTop: '3px solid black',
+    borderTop: '1px solid rgba(86, 141, 229, 1)',
 
     position: 'relative'
 
@@ -71,6 +71,7 @@ const Center = styled('div')(
 const Title = styled('h3')(
   {
     marginBottom: '30px',
+    color:'rgb(42, 128, 219)'
   }
 )
 

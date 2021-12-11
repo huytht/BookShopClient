@@ -245,7 +245,8 @@ const NavbarStore = () => {
         <Left>
           <SearchContainer>
             <SearchBar
-              style={{ width: 300 }}
+              style={{ width: 300 ,border:'0.1px solid rgba(86, 141, 229, 1)',borderRadius:'0px'}}
+              
               value={value}
               onChange={handleChange}
               placeholder="TÌm kiếm theo tựa sách"
@@ -285,7 +286,7 @@ const NavbarStore = () => {
 
             {!isLoggedIn ? (
               <>
-                <Button onClick={handleOpen}>Đăng nhập</Button>
+                <Button  style={{color:'rgb(42, 128, 219)'}}  onClick={handleOpen}>Đăng nhập</Button>
                 <Modal
                   open={open}
                   onClose={handleClose}
@@ -296,7 +297,7 @@ const NavbarStore = () => {
                     <LoginForm />
                   </Box>
                 </Modal>
-                <Button onClick={handleOpenRegisterForm}>Đăng kí</Button>
+                <Button style={{color:'rgb(42, 128, 219)'}} onClick={handleOpenRegisterForm}>Đăng kí</Button>
                 <Modal
                   open={openRegisterForm}
                   onClose={handleCloseRegisterForm}

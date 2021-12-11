@@ -88,7 +88,7 @@ const MenuStore = () => {
         <AppBar
           position="static"
           style={{
-            backgroundColor: "green",
+            backgroundColor: "rgba(86, 141, 229, 1)",
             maxHeight: 50,
             justifyContent: "center",
             border: 0,
@@ -113,12 +113,16 @@ const MenuStore = () => {
               role={undefined}
               placement="bottom-start"
               transition
+             
             >
               {({ TransitionProps, placement }) => (
                 <Grow
                   {...TransitionProps}
                   style={{
                     borderRadius: "0px",
+                    border:'0.1px solid rgba(86, 141, 229, 1)',
+                    marginTop:'5px',
+                   
                     transformOrigin:
                       placement === "bottom-start" ? "left top" : "left bottom",
                   }}
@@ -157,7 +161,7 @@ const MenuStore = () => {
                 style={{ color: "white" }}
                 arrow
               >
-                <Button>Hotline:1234</Button>
+                <Button>Hotline:0123456789</Button>
               </Tooltip>
             </Right>
           </Toolbar>

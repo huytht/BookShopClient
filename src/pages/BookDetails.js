@@ -32,8 +32,8 @@ const DESCSUMARY = styled("div")({
 
 const PAY = styled("h3")({
   textAlign: "center",
-  borderBottom: "1px solid green",
-  color: "green",
+  borderBottom: "1px solid rgba(86, 141, 229, 1)",
+  color: "blue",
   paddingBottom: "10px",
 });
 const Info = styled("div")({});
@@ -108,7 +108,7 @@ const BookDetails = () => {
       <Wrapper>
         <Breadcrumbs
           aria-label="breadcrumb"
-          style={{ borderBottom: "1px solid green" }}
+          style={{ borderBottom: "1px solid rgba(86, 141, 229, 1)" }}
         >
           <Link style={{ textDecoration: "none" }} color="inherit" to="/">
             Danh mục thể loại
@@ -135,7 +135,7 @@ const BookDetails = () => {
                   m: 1,
                   width: "100%",
                   height: "100%",
-                  border: "1px solid green",
+                  border: "1px solid rgba(86, 141, 229, 1)",
                 },
               }}
             >
@@ -224,7 +224,7 @@ const BookDetails = () => {
                   m: 1,
                   width: "100%",
                   height: "100%",
-                  border: "1px solid green",
+                  border: "1px solid rgba(86, 141, 229, 1)",
                 },
               }}
             >
@@ -266,7 +266,7 @@ const BookDetails = () => {
                     Trạng thái:{" "}
                     <p
                       style={{
-                        color: "green",
+                        color: "rgba(86, 141, 229, 1)",
                         justifyContent: "flex-end",
                         display: "flex",
                         flex: 1,
@@ -281,7 +281,7 @@ const BookDetails = () => {
                 <Link style={{textDecoration:'none'}} to="/cart">
                   <Button
                     style={{
-                      backgroundColor: "green",
+                      backgroundColor: "rgba(86, 141, 229, 1)",
                       color: "white",
                       fontWeight: "bold",
                       
@@ -312,8 +312,8 @@ const BookDetails = () => {
                 ) : (
                   <Button
                     style={{
-                      backgroundColor: "#FDC92D",
-                      color: "black",
+                      backgroundColor: "rgb(42, 128, 219)",
+                      color: "white",
                       fontWeight: "bold",
                       height: "50px",
                       borderRadius: "0px",

@@ -20,7 +20,7 @@ import usePagination from "../pagination/PaginationItem";
 
 const Title = styled("h1")({
   marginLeft: "10px",
-  color: "green",
+  color: "rgba(86, 141, 229, 1)",
 });
 const Rate = styled("div")({
   display: "flex",
@@ -132,7 +132,7 @@ const RRatingBook = ({ props }) => {
               </Content>
               <Button
                 style={{
-                  backgroundColor: "green",
+                  backgroundColor: "rgba(86, 141, 229, 1)",
                   color: "white",
                   marginLeft: "95px",
                   marginTop: "10px",

@@ -30,7 +30,7 @@ const Title = styled("h1")({
   paddingLeft: "10px",
   margin: "20px",
   marginRight: "40px",
-  color: "green",
+  color: "rgba(86, 141, 229, 1)",
   width: "auto",
   display: "flex",
   flex: 1,
