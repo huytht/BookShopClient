@@ -157,22 +157,9 @@ const NavbarStore = () => {
     prevOpen.current = openSetting;
   }, [openSetting]);
 
-  // history.listen((location) => {
-  //   dispatch(clearMessage()); // clear message when changing location
-  // });
-
-  const [openSuccess, setOpenSuccess] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (openSuccess === true)
-        setOpenSuccess(false);
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  history.listen((location) => {
+    dispatch(clearMessage()); // clear message when changing location
+  });
 
   useEffect(() => {
     if (user) {
@@ -195,7 +182,6 @@ const NavbarStore = () => {
     const interval = setInterval(() => {
       if (JSON.parse(localStorage.getItem("registered")) === true) {
         handleCloseRegisterForm();
-        setOpenSuccess(true);
       }
     }, 2000);
 
@@ -231,16 +217,6 @@ const NavbarStore = () => {
 
   return (
     <Container>
-      <Dialog
-        open={openSuccess}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        disableBackdropClick
-      >
-        <Alert variant="filled" severity="success">
-          Đăng kí thành công
-        </Alert>
-      </Dialog>
       <Wrapper>
         <Left>
           <SearchContainer>

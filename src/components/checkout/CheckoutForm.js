@@ -29,16 +29,16 @@ export const CheckoutForm = () => {
   const { numberCart, Carts } = useSelector((state) => state.product);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setOpen(false);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setOpen(false);
   
-    }, 3000);
+  //   }, 3000);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   // place order
   const [provinceCitySADetail, setProvinceCitySADetail] = useState({});
@@ -158,7 +158,7 @@ export const CheckoutForm = () => {
       JSON.stringify(orderDetailInserted) !== "{}"
     ) {
       handleNext();
-      setOpen(true);
+      // setOpen(true);
     }
   };
 
@@ -296,7 +296,7 @@ export const CheckoutForm = () => {
           </Fragment>
         </Card>
       </Box>
-      <Dialog
+      {/* <Dialog
           open={open}
           // onClose={this.handleClose}
           aria-labelledby="alert-dialog-title"
@@ -306,7 +306,7 @@ export const CheckoutForm = () => {
           <Alert variant="filled" severity="success">
             Đặt hàng thành công
           </Alert>
-        </Dialog>
+        </Dialog> */}
     </>
   );
 };
