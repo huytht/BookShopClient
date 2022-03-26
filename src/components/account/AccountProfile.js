@@ -10,8 +10,8 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const AccountProfile = ({ props }) => (
-  <Card {...props}>
+const AccountProfile = ({ userInfo }) => (
+  <Card {...userInfo}>
     <CardContent>
       <Box
         sx={{
@@ -23,11 +23,11 @@ const AccountProfile = ({ props }) => (
         <Avatar
           style={{ width: "30%", height: "30%" }}
           alt="Remy Sharp"
-          src={`https://firebasestorage.googleapis.com/v0/b/bookshoponline-85349.appspot.com/o/user%2F${props?.avatar}?alt=media`}
+          src={`https://firebasestorage.googleapis.com/v0/b/bookshoponline-85349.appspot.com/o/user%2F${userInfo?.avatar}?alt=media`}
         />
         <br />
         <Typography color="textPrimary" gutterBottom variant="h5">
-          {props.fullname}
+          {userInfo.fullname}
         </Typography>
       </Box>
     </CardContent>

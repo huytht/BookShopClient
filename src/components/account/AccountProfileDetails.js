@@ -9,7 +9,12 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core";
+import callApi from "../../api";
 import moment from "moment";
+import { set } from "lodash";
+import { PublicTwoTone } from "@material-ui/icons";
+import axios from "axios";
+import { propTypes } from "react-bootstrap/esm/Image";
 
 const gender = [
   {
@@ -48,9 +53,23 @@ const AccountProfileDetails = ({ props }) => {
       gender: props.gender,
     });
   }, [props]);
-
+const UpdateProfile =  () =>{
+  const dob = Math.floor(new Date(values.date_of_birth).getTime() / 1000);
+   axios.put(
+       `${process.env.REACT_APP_API_ENDPOINT}/user/update-user/${props._id}`,{
+          username: props.username,
+          fullname: values.fullname,
+          date_of_birth: dob,
+          email: values.email,
+          password: props.password,
+          phone: values.phone,
+          gender: parseInt(values.gender, 10),
+          avatar: props.avatar,
+       }
+    )
+ }
   return (
-    <form autoComplete="off" noValidate>
+    <form autoComplete="off" onSubmit={UpdateProfile} noValidate>
       <Card {...props}>
         <CardHeader
           subheader="Thông tin có thể chỉnh sửa"
@@ -128,7 +147,7 @@ const AccountProfileDetails = ({ props }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            {/* <Grid item md={6} xs={12}>
               <label
                 style={{ fontWeight: "bold", marginBottom: "10px" }}
                 htmlFor="date_of_birth"
@@ -144,7 +163,7 @@ const AccountProfileDetails = ({ props }) => {
                 value={values.date_of_birth}
                 variant="outlined"
               />
-            </Grid>
+            </Grid> */}
             <Grid item md={6} xs={12}>
               <label
                 style={{ fontWeight: "bold", marginBottom: "10px" }}
@@ -181,7 +200,7 @@ const AccountProfileDetails = ({ props }) => {
             p: 2,
           }}
         >
-          <Button color="primary" variant="contained">
+          <Button type="submit" color="primary" variant="contained"  >
             Save details
           </Button>
         </Box>

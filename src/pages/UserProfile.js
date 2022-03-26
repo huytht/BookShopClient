@@ -46,7 +46,7 @@ export const UserProfile = () => {
             md={6}
             xs={12}
           >
-            <AccountProfile props={userInfo} />
+            <AccountProfile abc="abc" userInfo={userInfo} />
           </Grid>
           <Grid
             item
